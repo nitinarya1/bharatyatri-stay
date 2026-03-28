@@ -22,14 +22,14 @@ export default function HomePage() {
       tagline: 'City of Sangam',
       icon: '🕉️',
       desc: 'Holy confluence of Ganga, Yamuna & Saraswati',
-      img: 'https://images.unsplash.com/photo-1609947017136-9daf32a16982?w=600'
+      img: '/sangam.webp'
     },
     {
       name: 'Varanasi',
       tagline: 'City of Lights',
       icon: '🪔',
       desc: 'Ancient spiritual capital on the banks of Ganga',
-      img: 'https://images.unsplash.com/photo-1561361513-2d000a50f0dc?w=600'
+      img: '/kashi.png'
     }
   ];
 
