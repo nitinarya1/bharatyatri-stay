@@ -22,40 +22,58 @@ export default function Navbar() {
         justifyContent: 'space-between',
         height: '72px',
       }}>
-        {/* Logo */}
-        <Link href="/" style={{ display: 'flex', alignItems: 'center', height: '100%', textDecoration: 'none' }}>
-          <div style={{ position: 'relative', height: '56px', width: '200px' }}>
+        {/* Logo & Brand Name */}
+        <Link href="/" style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', textDecoration: 'none' }}>
+          <div style={{ position: 'relative', height: '40px', width: '40px', borderRadius: '8px', overflow: 'hidden' }}>
             <Image 
               src="/logo.png" 
-              alt="BharatYatri Stay" 
+              alt="BharatYatri Logo" 
               fill
-              style={{ objectFit: 'contain', objectPosition: 'left' }}
+              style={{ objectFit: 'cover' }}
               priority
             />
+          </div>
+          <div style={{ display: 'flex', flexDirection: 'column', lineHeight: 1 }}>
+            <span style={{ 
+              fontSize: '1.25rem', 
+              fontWeight: 800, 
+              color: 'var(--color-secondary)',
+              letterSpacing: '-0.02em',
+              fontFamily: 'var(--font-sans)'
+            }}>
+              BharatYatri
+            </span>
+            <span style={{ 
+              fontSize: '0.75rem', 
+              fontWeight: 600, 
+              color: 'var(--color-primary)',
+              textTransform: 'uppercase',
+              letterSpacing: '0.1em'
+            }}>
+              Stay Platform
+            </span>
           </div>
         </Link>
 
         {/* Desktop Nav */}
-        <div style={{ display: 'flex', alignItems: 'center', gap: '1.5rem' }} className="desktop-nav">
-          <Link href="/" style={{ color: 'var(--color-text-secondary)', textDecoration: 'none', fontWeight: 500, fontSize: '0.9rem', transition: 'color 0.2s' }}
+        <div style={{ display: 'flex', alignItems: 'center', gap: '2rem' }} className="desktop-nav">
+          <Link href="/" style={{ color: 'var(--color-text-secondary)', textDecoration: 'none', fontWeight: 500, fontSize: '0.95rem', transition: 'color 0.2s' }}
             onMouseEnter={e => e.target.style.color = 'var(--color-primary)'}
             onMouseLeave={e => e.target.style.color = 'var(--color-text-secondary)'}>
             Home
           </Link>
-          <Link href="/search" style={{ color: 'var(--color-text-secondary)', textDecoration: 'none', fontWeight: 500, fontSize: '0.9rem', transition: 'color 0.2s' }}
+          <Link href="/about" style={{ color: 'var(--color-text-secondary)', textDecoration: 'none', fontWeight: 500, fontSize: '0.95rem', transition: 'color 0.2s' }}
             onMouseEnter={e => e.target.style.color = 'var(--color-primary)'}
             onMouseLeave={e => e.target.style.color = 'var(--color-text-secondary)'}>
-            Find Stays
+            About Us
           </Link>
-          <Link href="/about" style={{ color: 'var(--color-text-secondary)', textDecoration: 'none', fontWeight: 500, fontSize: '0.9rem', transition: 'color 0.2s' }}
-            onMouseEnter={e => e.target.style.color = 'var(--color-primary)'}
-            onMouseLeave={e => e.target.style.color = 'var(--color-text-secondary)'}>
-            About
-          </Link>
-          <Link href="/contact" style={{ color: 'var(--color-text-secondary)', textDecoration: 'none', fontWeight: 500, fontSize: '0.9rem', transition: 'color 0.2s' }}
+          <Link href="/contact" style={{ color: 'var(--color-text-secondary)', textDecoration: 'none', fontWeight: 500, fontSize: '0.95rem', transition: 'color 0.2s' }}
             onMouseEnter={e => e.target.style.color = 'var(--color-primary)'}
             onMouseLeave={e => e.target.style.color = 'var(--color-text-secondary)'}>
             Contact
+          </Link>
+          <Link href="/search" className="btn-primary" style={{ padding: '0.6rem 1.25rem', borderRadius: '50px', fontSize: '0.9rem', boxShadow: '0 4px 12px rgba(242, 142, 43, 0.2)' }}>
+            🔍 Find Stays
           </Link>
         </div>
 

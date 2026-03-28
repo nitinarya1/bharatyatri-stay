@@ -9,6 +9,10 @@ export const metadata = {
   title: 'BharatYatri Stay | Budget Hotels, Dharamshalas & Guest Houses',
   description: 'Find affordable and clean hotels, dharamshalas, and guest houses in Prayagraj, Varanasi, and other holy cities. Budget-friendly stays for pilgrims and travelers.',
   keywords: 'budget hotel Prayagraj, dharamshala Varanasi, cheap hotel Kashi, guest house Sangam, affordable stay Varanasi',
+  icons: {
+    icon: '/favicon.ico',
+    apple: '/logo.png',
+  },
 };
 
 export default function RootLayout({ children }) {
