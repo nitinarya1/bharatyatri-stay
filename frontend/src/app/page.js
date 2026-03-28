@@ -16,18 +16,27 @@ export default function HomePage() {
     }).catch(() => setLoading(false));
   }, []);
 
+  const CityIcons = {
+    Sangam: () => (
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+    ),
+    Temple: () => (
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M4 22h16"/><path d="M4 14v-4l8-7 8 7v4"/><path d="M6 14v4h12v-4"/><path d="m11 11 2 2-2 2z"/></svg>
+    )
+  };
+
   const cities = [
     {
       name: 'Prayagraj',
       tagline: 'City of Sangam',
-      icon: '🕉️',
+      icon: CityIcons.Sangam,
       desc: 'Holy confluence of Ganga, Yamuna & Saraswati',
       img: '/sangam.webp'
     },
     {
       name: 'Varanasi',
       tagline: 'City of Lights',
-      icon: '🪔',
+      icon: CityIcons.Temple,
       desc: 'Ancient spiritual capital on the banks of Ganga',
       img: '/kashi.png'
     }
@@ -197,6 +206,9 @@ export default function HomePage() {
                     justifyContent: 'flex-end',
                     padding: '2rem',
                   }}>
+                    <div style={{ color: 'var(--color-primary)', marginBottom: '0.5rem' }}>
+                      <city.icon />
+                    </div>
                     <h3 style={{ fontSize: '1.75rem', fontWeight: 800, color: 'white', marginBottom: '0.25rem' }}>{city.name}</h3>
                     <p style={{ fontSize: '0.9rem', color: 'rgba(255,255,255,0.8)', fontWeight: 500 }}>
                       {city.tagline} • {city.desc}
