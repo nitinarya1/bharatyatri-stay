@@ -1,12 +1,21 @@
-'use client';
-import Link from 'next/link';
+const Icons = {
+  Star: () => (
+    <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+  ),
+  Location: () => (
+    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+  ),
+  ArrowRight: () => (
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+  )
+};
 
 export default function HotelCard({ hotel }) {
   const propertyTypeLabels = {
-    hotel: 'Hotel',
+    hotel: 'Premium Hotel',
     dharamshala: 'Dharamshala',
     guest_house: 'Guest House',
-    lodge: 'Lodge',
+    lodge: 'Comfort Lodge',
   };
 
   const propertyTypeColors = {
@@ -20,9 +29,15 @@ export default function HotelCard({ hotel }) {
 
   return (
     <Link href={`/hotel/${hotel._id}`} style={{ textDecoration: 'none', color: 'inherit' }}>
-      <div className="card" style={{ cursor: 'pointer' }}>
+      <div className="card shadow-medium" style={{ 
+        cursor: 'pointer',
+        borderRadius: '1.25rem',
+        overflow: 'hidden',
+        background: 'white',
+        border: '1px solid var(--color-border)'
+      }}>
         {/* Image */}
-        <div style={{ position: 'relative', height: '200px', overflow: 'hidden' }}>
+        <div style={{ position: 'relative', height: '220px', overflow: 'hidden' }}>
           <img
             src={hotel.images?.[0] || 'https://images.unsplash.com/photo-1566073771259-6a8506099945?w=800'}
             alt={hotel.name}
@@ -30,133 +45,152 @@ export default function HotelCard({ hotel }) {
               width: '100%',
               height: '100%',
               objectFit: 'cover',
-              transition: 'transform 0.4s ease',
+              transition: 'transform 0.5s cubic-bezier(0.165, 0.84, 0.44, 1)',
             }}
-            onMouseEnter={e => e.target.style.transform = 'scale(1.05)'}
+            onMouseEnter={e => e.target.style.transform = 'scale(1.1)'}
             onMouseLeave={e => e.target.style.transform = 'scale(1)'}
           />
           {/* Property Type Badge */}
           <span style={{
             position: 'absolute',
-            top: '0.75rem',
-            left: '0.75rem',
-            padding: '0.25rem 0.6rem',
-            borderRadius: '0.5rem',
-            fontSize: '0.7rem',
-            fontWeight: 600,
+            top: '1rem',
+            left: '1rem',
+            padding: '0.35rem 0.75rem',
+            borderRadius: '50px',
+            fontSize: '0.65rem',
+            fontWeight: 800,
+            textTransform: 'uppercase',
+            letterSpacing: '0.05em',
             background: typeStyle.bg,
             color: typeStyle.color,
-            backdropFilter: 'blur(4px)',
+            boxShadow: '0 4px 12px rgba(0,0,0,0.1)',
+            border: '1px solid rgba(255,255,255,0.5)'
           }}>
             {propertyTypeLabels[hotel.propertyType]}
           </span>
           {/* City Badge */}
-          <span style={{
+          <span className="glass" style={{
             position: 'absolute',
-            top: '0.75rem',
-            right: '0.75rem',
-            padding: '0.25rem 0.6rem',
-            borderRadius: '0.5rem',
-            fontSize: '0.7rem',
-            fontWeight: 600,
-            background: 'rgba(0,0,0,0.6)',
-            color: 'white',
+            top: '1rem',
+            right: '1rem',
+            padding: '0.35rem 0.75rem',
+            borderRadius: '50px',
+            fontSize: '0.65rem',
+            fontWeight: 700,
+            display: 'flex',
+            alignItems: 'center',
+            gap: '0.3rem',
+            color: 'var(--color-secondary)',
+            boxShadow: '0 4px 12px rgba(0,0,0,0.1)'
           }}>
-            📍 {hotel.city}
+            <Icons.Location /> {hotel.city}
           </span>
         </div>
 
         {/* Content */}
-        <div style={{ padding: '1rem' }}>
-          <h3 style={{
-            fontSize: '1.05rem',
-            fontWeight: 700,
-            marginBottom: '0.25rem',
-            color: 'var(--color-text-primary)',
-          }}>
-            {hotel.name}
-          </h3>
+        <div style={{ padding: '1.25rem' }}>
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '0.5rem' }}>
+            <h3 style={{
+              fontSize: '1.15rem',
+              fontWeight: 800,
+              color: 'var(--color-secondary)',
+              letterSpacing: '-0.01em',
+              flex: 1,
+              paddingRight: '1rem'
+            }}>
+              {hotel.name}
+            </h3>
+            <div style={{ 
+              display: 'flex', 
+              alignItems: 'center', 
+              gap: '0.25rem',
+              background: hotel.rating >= 4 ? '#F0FDF4' : '#FFFBEB',
+              color: hotel.rating >= 4 ? '#16A34A' : '#D97706',
+              padding: '0.25rem 0.5rem',
+              borderRadius: '0.5rem',
+              fontSize: '0.85rem',
+              fontWeight: 800
+            }}>
+              <Icons.Star />
+              {hotel.rating?.toFixed(1)}
+            </div>
+          </div>
 
           <p style={{
-            fontSize: '0.8rem',
-            color: 'var(--color-text-muted)',
-            marginBottom: '0.5rem',
+            fontSize: '0.85rem',
+            color: 'var(--color-text-secondary)',
+            marginBottom: '1rem',
             display: '-webkit-box',
             WebkitLineClamp: 1,
             WebkitBoxOrient: 'vertical',
             overflow: 'hidden',
+            fontWeight: 500
           }}>
             {hotel.address}
           </p>
 
-          {/* Rating */}
-          <div style={{ display: 'flex', alignItems: 'center', gap: '0.35rem', marginBottom: '0.75rem' }}>
-            <span style={{
-              background: hotel.rating >= 4 ? 'var(--color-success)' : hotel.rating >= 3 ? 'var(--color-warning)' : 'var(--color-error)',
-              color: 'white',
-              padding: '0.15rem 0.45rem',
-              borderRadius: '0.35rem',
-              fontSize: '0.75rem',
-              fontWeight: 700,
-            }}>
-              ★ {hotel.rating?.toFixed(1)}
-            </span>
-            <span style={{ fontSize: '0.75rem', color: 'var(--color-text-muted)' }}>
-              ({hotel.totalReviews} reviews)
-            </span>
-          </div>
-
           {/* Amenities */}
-          <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.35rem', marginBottom: '0.75rem' }}>
+          <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.4rem', marginBottom: '1.25rem' }}>
             {hotel.amenities?.slice(0, 3).map((amenity, i) => (
               <span key={i} style={{
                 fontSize: '0.7rem',
-                padding: '0.2rem 0.5rem',
-                borderRadius: '0.35rem',
-                background: 'var(--color-surface-alt)',
-                color: 'var(--color-text-secondary)',
-                fontWeight: 500,
+                padding: '0.25rem 0.6rem',
+                borderRadius: '0.5rem',
+                background: 'var(--color-secondary-light)',
+                color: 'var(--color-secondary)',
+                fontWeight: 700,
               }}>
                 {amenity}
               </span>
             ))}
             {hotel.amenities?.length > 3 && (
-              <span style={{
-                fontSize: '0.7rem',
-                padding: '0.2rem 0.5rem',
-                borderRadius: '0.35rem',
-                background: 'var(--color-primary-light)',
-                color: 'var(--color-primary)',
-                fontWeight: 600,
-              }}>
+              <span style={{ fontSize: '0.7rem', color: 'var(--color-text-muted)', fontWeight: 600, alignSelf: 'center' }}>
                 +{hotel.amenities.length - 3} more
               </span>
             )}
           </div>
 
-          {/* Price */}
+          {/* Price & CTA */}
           <div style={{
             display: 'flex',
-            alignItems: 'baseline',
+            alignItems: 'center',
             justifyContent: 'space-between',
             borderTop: '1px solid var(--color-border)',
-            paddingTop: '0.75rem',
+            paddingTop: '1rem',
           }}>
             <div>
-              <span style={{ fontSize: '1.25rem', fontWeight: 800, color: 'var(--color-primary)' }}>
-                ₹{hotel.pricePerNight}
-              </span>
-              <span style={{ fontSize: '0.8rem', color: 'var(--color-text-muted)', marginLeft: '0.25rem' }}>
-                /night
-              </span>
+              <div style={{ fontSize: '0.7rem', color: 'var(--color-text-muted)', fontWeight: 700, textTransform: 'uppercase', marginBottom: '0.1rem' }}>Starting from</div>
+              <div style={{ display: 'flex', alignItems: 'baseline', gap: '0.2rem' }}>
+                <span style={{ fontSize: '1.4rem', fontWeight: 900, color: 'var(--color-primary)' }}>
+                  ₹{hotel.pricePerNight}
+                </span>
+                <span style={{ fontSize: '0.8rem', color: 'var(--color-text-muted)', fontWeight: 600 }}>
+                  /night
+                </span>
+              </div>
             </div>
-            <span style={{
-              fontSize: '0.8rem',
-              fontWeight: 600,
-              color: 'var(--color-secondary)',
-            }}>
-              View Details →
-            </span>
+            <div style={{
+              background: 'var(--color-secondary)',
+              color: 'white',
+              width: '40px',
+              height: '40px',
+              borderRadius: '12px',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              transition: 'all 0.2s ease'
+            }}
+              onMouseEnter={e => {
+                e.currentTarget.style.background = 'var(--color-primary)';
+                e.currentTarget.style.transform = 'rotate(-10deg) scale(1.1)';
+              }}
+              onMouseLeave={e => {
+                e.currentTarget.style.background = 'var(--color-secondary)';
+                e.currentTarget.style.transform = 'rotate(0) scale(1)';
+              }}
+            >
+              <Icons.ArrowRight />
+            </div>
           </div>
         </div>
       </div>
