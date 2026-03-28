@@ -3,9 +3,9 @@ import Link from 'next/link';
 
 function FooterLink({ href, children }) {
   return (
-    <Link href={href} style={{ color: '#a8a29e', textDecoration: 'none', fontSize: '0.85rem', transition: 'color 0.2s' }}
-      onMouseEnter={e => e.target.style.color = '#E8720C'}
-      onMouseLeave={e => e.target.style.color = '#a8a29e'}>
+    <Link href={href} style={{ color: '#d6d3d1', textDecoration: 'none', fontSize: '0.85rem', transition: 'color 0.2s' }}
+      onMouseEnter={e => e.target.style.color = '#F28E2B'}
+      onMouseLeave={e => e.target.style.color = '#d6d3d1'}>
       {children}
     </Link>
   );
@@ -14,7 +14,7 @@ function FooterLink({ href, children }) {
 export default function Footer() {
   return (
     <footer style={{
-      background: '#1C1917',
+      background: '#002244',
       color: '#d6d3d1',
       padding: '3rem 0 1.5rem',
       marginTop: '4rem',
@@ -28,10 +28,10 @@ export default function Footer() {
         }}>
           {/* Brand */}
           <div>
-            <h3 style={{ fontSize: '1.3rem', fontWeight: 700, color: 'white', marginBottom: '0.75rem' }}>
-              🏨 BharatYatri Stay
-            </h3>
-            <p style={{ fontSize: '0.85rem', lineHeight: 1.6, color: '#a8a29e' }}>
+            <div style={{ position: 'relative', height: '48px', width: '160px', marginBottom: '1rem' }}>
+              <img src="/logo.png" alt="BharatYatri Stay" style={{ height: '100%', objectFit: 'contain' }} />
+            </div>
+            <p style={{ fontSize: '0.85rem', lineHeight: 1.6, color: '#d6d3d1' }}>
               Budget-friendly stays for pilgrims and travelers in Prayagraj & Varanasi.
               Clean rooms, honest prices, trusted stays.
             </p>

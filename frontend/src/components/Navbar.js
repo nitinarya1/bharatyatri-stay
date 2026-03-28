@@ -1,4 +1,4 @@
-'use client';
+import Image from 'next/image';
 import Link from 'next/link';
 import { useState } from 'react';
 
@@ -18,31 +18,19 @@ export default function Navbar() {
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'space-between',
-        height: '64px',
+        height: '72px',
       }}>
         {/* Logo */}
-        <Link href="/" style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', textDecoration: 'none' }}>
-          <span style={{
-            fontSize: '1.5rem',
-            fontWeight: 800,
-            background: 'linear-gradient(135deg, var(--color-primary), var(--color-accent))',
-            WebkitBackgroundClip: 'text',
-            WebkitTextFillColor: 'transparent',
-          }}>
-            🏨 BharatYatri
-          </span>
-          <span style={{
-            fontSize: '0.7rem',
-            fontWeight: 600,
-            color: 'var(--color-secondary)',
-            background: 'var(--color-secondary-light)',
-            padding: '0.15rem 0.5rem',
-            borderRadius: '9999px',
-            textTransform: 'uppercase',
-            letterSpacing: '0.05em',
-          }}>
-            Stay
-          </span>
+        <Link href="/" style={{ display: 'flex', alignItems: 'center', height: '100%', textDecoration: 'none' }}>
+          <div style={{ position: 'relative', height: '56px', width: '200px' }}>
+            <Image 
+              src="/logo.png" 
+              alt="BharatYatri Stay" 
+              fill
+              style={{ objectFit: 'contain', objectPosition: 'left' }}
+              priority
+            />
+          </div>
         </Link>
 
         {/* Desktop Nav */}
