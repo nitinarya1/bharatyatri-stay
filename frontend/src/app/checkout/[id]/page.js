@@ -3,19 +3,21 @@ import { useEffect, useState, use } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { fetchHotel, createBooking } from '@/lib/api';
+import { useAuth } from '@/context/AuthContext';
 
 export default function CheckoutPage({ params }) {
   const { id } = use(params);
   const router = useRouter();
+  const { user } = useAuth();
   const [hotel, setHotel] = useState(null);
   const [loading, setLoading] = useState(true);
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState('');
 
   const [form, setForm] = useState({
-    guestName: '',
-    guestPhone: '',
-    guestEmail: '',
+    guestName: user?.name || '',
+    guestPhone: user?.phone || '',
+    guestEmail: user?.email || '',
     checkIn: '',
     checkOut: '',
     guests: 1,
@@ -23,6 +25,18 @@ export default function CheckoutPage({ params }) {
     paymentMode: 'pay_at_hotel',
     specialRequests: '',
   });
+
+  // Update form if user data loads after initial render
+  useEffect(() => {
+    if (user && !form.guestName) {
+      setForm(f => ({
+        ...f,
+        guestName: user.name,
+        guestPhone: user.phone || '',
+        guestEmail: user.email,
+      }));
+    }
+  }, [user]);
 
   useEffect(() => {
     fetchHotel(id).then(res => {
@@ -58,7 +72,7 @@ export default function CheckoutPage({ params }) {
 
     setSubmitting(true);
     try {
-      const res = await createBooking({ ...form, hotelId: id });
+      const res = await createBooking({ ...form, hotelId: id, userId: user?.id || null });
       if (res.success) {
         const bookingData = encodeURIComponent(JSON.stringify(res.data));
         router.push(`/booking-success?data=${bookingData}`);

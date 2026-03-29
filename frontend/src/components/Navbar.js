@@ -3,6 +3,7 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import { useState } from 'react';
+import { useAuth } from '@/context/AuthContext';
 
 // Professional SVG Icons
 const Icons = {
@@ -23,11 +24,15 @@ const Icons = {
   ),
   Close: () => (
     <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
+  ),
+  User: () => (
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
   )
 };
 
 export default function Navbar() {
   const [menuOpen, setMenuOpen] = useState(false);
+  const { user } = useAuth();
 
   return (
     <nav className="glass" style={{
@@ -73,38 +78,23 @@ export default function Navbar() {
             </span>
           </div>
         </Link>
-
-        {/* Desktop Nav */}
         <div style={{ display: 'flex', alignItems: 'center', gap: '2rem' }} className="desktop-nav">
-          {[
-            { name: 'Home', href: '/' },
-            { name: 'About Us', href: '/about' },
-            { name: 'Contact', href: '/contact' },
-          ].map((item) => (
-            <Link 
-              key={item.name} 
-              href={item.href} 
-              style={{ 
-                color: 'var(--color-text-secondary)', 
-                textDecoration: 'none', 
-                fontWeight: 600, 
-                fontSize: '0.9rem', 
-                transition: 'all 0.2s ease',
-                position: 'relative'
-              }}
-              onMouseEnter={e => {
-                e.target.style.color = 'var(--color-primary)';
-              }}
-              onMouseLeave={e => {
-                e.target.style.color = 'var(--color-text-secondary)';
-              }}
-            >
-              {item.name}
-            </Link>
-          ))}
-          <Link href="/search" className="btn-primary" style={{ padding: '0.6rem 1.25rem', borderRadius: '50px', fontSize: '0.85rem' }}>
+          <Link href="/" style={{ color: 'var(--color-text-secondary)', textDecoration: 'none', fontWeight: 600, fontSize: '0.9rem' }}>Home</Link>
+          <Link href="/about" style={{ color: 'var(--color-text-secondary)', textDecoration: 'none', fontWeight: 600, fontSize: '0.9rem' }}>About Us</Link>
+          
+          <Link href="/search" className="btn-outline" style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', padding: '0.5rem 1rem', borderRadius: '50px', fontSize: '0.85rem' }}>
             <Icons.Search /> Find Stays
           </Link>
+
+          {user ? (
+            <Link href="/profile" className="btn-primary" style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', padding: '0.6rem 1.25rem', borderRadius: '50px', fontSize: '0.85rem' }}>
+              <Icons.User /> Profile
+            </Link>
+          ) : (
+            <Link href="/login" className="btn-primary" style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', padding: '0.6rem 1.25rem', borderRadius: '50px', fontSize: '0.85rem' }}>
+              <Icons.User /> Login
+            </Link>
+          )}
         </div>
 
         {/* Mobile Hamburger */}

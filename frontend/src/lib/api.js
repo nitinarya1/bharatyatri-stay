@@ -29,6 +29,31 @@ export async function adminLogin(username, password) {
   return res.json();
 }
 
+export async function userLogin(email, password) {
+  const res = await fetch(`${API_BASE}/auth/login`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ email, password })
+  });
+  return res.json();
+}
+
+export async function userRegister(data) {
+  const res = await fetch(`${API_BASE}/auth/register`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(data)
+  });
+  return res.json();
+}
+
+export async function fetchUserProfile(token) {
+  const res = await fetch(`${API_BASE}/auth/me`, {
+    headers: { 'Authorization': `Bearer ${token}` }
+  });
+  return res.json();
+}
+
 export async function fetchBookings(token) {
   const res = await fetch(`${API_BASE}/bookings`, {
     headers: { 'Authorization': `Bearer ${token}` }

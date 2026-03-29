@@ -8,7 +8,7 @@ const router = express.Router();
 // POST /api/bookings - Create a new booking (public)
 router.post('/', async (req, res) => {
   try {
-    const { hotelId, roomType, checkIn, checkOut, guests, guestName, guestPhone, guestEmail, paymentMode, specialRequests } = req.body;
+    const { hotelId, userId, roomType, checkIn, checkOut, guests, guestName, guestPhone, guestEmail, paymentMode, specialRequests } = req.body;
 
     // Validate hotel exists
     const hotel = await Hotel.findById(hotelId);
@@ -28,6 +28,7 @@ router.post('/', async (req, res) => {
 
     const booking = await Booking.create({
       hotelId,
+      userId: userId || null,
       hotelName: hotel.name,
       guestName,
       guestPhone,
