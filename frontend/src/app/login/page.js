@@ -1,6 +1,6 @@
 'use client';
 import { useState } from 'react';
-import { useRouter } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 import Link from 'next/link';
 import { useAuth } from '@/context/AuthContext';
 import { userLogin } from '@/lib/api';
@@ -11,6 +11,8 @@ export default function LoginPage() {
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
   const router = useRouter();
+  const searchParams = useSearchParams();
+  const redirect = searchParams.get('redirect');
   const { login } = useAuth();
 
   const handleSubmit = async (e) => {
@@ -22,7 +24,7 @@ export default function LoginPage() {
       const res = await userLogin(email, password);
       if (res.success) {
         login(res.data.user, res.data.token);
-        router.push('/');
+        router.push(redirect || '/');
       } else {
         setError(res.error || 'Invalid credentials');
       }

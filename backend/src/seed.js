@@ -3,6 +3,7 @@ require('dotenv').config();
 const connectDB = require('./config/db');
 const Hotel = require('./models/Hotel');
 const Admin = require('./models/Admin');
+const User = require('./models/User');
 
 const sampleHotels = [
   {
@@ -194,12 +195,22 @@ const seedDatabase = async () => {
     // Clear existing data
     await Hotel.deleteMany({});
     await Admin.deleteMany({});
+    await User.deleteMany({});
 
     console.log('🗑️  Cleared existing data');
 
     // Seed hotels
     const hotels = await Hotel.insertMany(sampleHotels);
     console.log(`🏨 Seeded ${hotels.length} hotels`);
+
+    // Create test user
+    const user = await User.create({
+      name: 'Test User',
+      email: 'user@example.com',
+      password: 'password123',
+      phone: '9876543210'
+    });
+    console.log(`👤 Test User created: ${user.email}`);
 
     // Create admin user
     const admin = await Admin.create({

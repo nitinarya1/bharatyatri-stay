@@ -8,11 +8,18 @@ import { useAuth } from '@/context/AuthContext';
 export default function CheckoutPage({ params }) {
   const { id } = use(params);
   const router = useRouter();
-  const { user } = useAuth();
+  const { user, loading: authLoading } = useAuth();
   const [hotel, setHotel] = useState(null);
   const [loading, setLoading] = useState(true);
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState('');
+
+  // Enforce login
+  useEffect(() => {
+    if (!authLoading && !user) {
+      router.push(`/login?redirect=/checkout/${id}`);
+    }
+  }, [user, authLoading, id, router]);
 
   const [form, setForm] = useState({
     guestName: user?.name || '',

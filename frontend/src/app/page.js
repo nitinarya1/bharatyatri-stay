@@ -106,6 +106,9 @@ export default function HomePage() {
               WebkitBackgroundClip: 'text',
               WebkitTextFillColor: 'transparent',
             }}> Holy Cities</span> of India
+            <div style={{ fontSize: '0.45em', marginTop: '0.5rem', fontWeight: 600, color: 'var(--color-primary)' }}>
+              (भारत के पवित्र शहरों में किफायती ठहराव)
+            </div>
           </h1>
 
           <p style={{
@@ -117,6 +120,8 @@ export default function HomePage() {
             fontWeight: 500
           }}>
             Discover handpicked hotels, dharamshalas & guest houses curated for a peaceful pilgrimage experience.
+            <br />
+            <span style={{ fontSize: '0.85em', color: 'var(--color-text-muted)' }}>शांतिपूर्ण तीर्थयात्रा के लिए बेहतरीन होटल और धर्मशालाएं।</span>
           </p>
 
           <SearchBar />
@@ -147,7 +152,10 @@ export default function HomePage() {
       <section className="section-spacing">
         <div className="container">
           <div style={{ textAlign: 'center', marginBottom: 'clamp(2rem, 8vw, 3.5rem)' }}>
-            <h2 className="section-title" style={{ fontSize: 'clamp(1.5rem, 5vw, 2rem)', marginBottom: '0.75rem' }}>Explore Spiritual Hubs</h2>
+            <h2 className="section-title" style={{ fontSize: 'clamp(1.5rem, 5vw, 2rem)', marginBottom: '0.75rem' }}>
+              Explore Spiritual Hubs 
+              <span style={{ display: 'block', fontSize: '0.5em', color: 'var(--color-primary)', marginTop: '0.25rem' }}>(आध्यात्मिक केंद्रों की खोज करें)</span>
+            </h2>
             <p className="section-subtitle">Comfortable budget stays in India&apos;s most sacred destinations</p>
           </div>
 
@@ -234,7 +242,10 @@ export default function HomePage() {
       <section className="section-spacing">
         <div className="container">
           <div style={{ textAlign: 'center', marginBottom: '3rem' }}>
-            <h2 className="section-title" style={{ fontSize: 'clamp(1.5rem, 5vw, 2rem)' }}>Why BharatYatri Stay?</h2>
+            <h2 className="section-title" style={{ fontSize: 'clamp(1.5rem, 5vw, 2rem)' }}>
+              Why BharatYatri Stay?
+              <span style={{ display: 'block', fontSize: '0.5em', color: 'var(--color-primary)', marginTop: '0.25rem' }}>(भारतयात्री को क्यों चुनें?)</span>
+            </h2>
           </div>
 
           <div style={{
@@ -266,6 +277,61 @@ export default function HomePage() {
                 <p style={{ fontSize: '0.85rem', color: 'var(--color-text-secondary)', lineHeight: 1.6 }}>{feat.desc}</p>
               </div>
             ))}
+          </div>
+        </div>
+      </section>
+      
+      {/* Trust Section - MNNIT Allahabad */}
+      <section className="section-spacing" style={{ background: 'white', borderTop: '1px solid var(--color-border)' }}>
+        <div className="container">
+          <div style={{
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+            textAlign: 'center',
+            gap: '1.5rem'
+          }}>
+            <div style={{ 
+              padding: '0.4rem 1.5rem', 
+              borderRadius: '2rem', 
+              background: '#F0F9FF', 
+              color: '#0369A1', 
+              fontSize: '0.85rem', 
+              fontWeight: 700,
+              border: '1px solid #BAE6FD',
+              textTransform: 'uppercase',
+              letterSpacing: '0.05em'
+            }}>
+              🎓 Student-Led Innovation (MNNIT Allahabad)
+            </div>
+            <h2 style={{ fontSize: 'clamp(1.5rem, 5vw, 2.25rem)', fontWeight: 800, color: 'var(--color-secondary)' }}>
+              Born in MNNIT Allahabad 
+              <br /> 
+              <span style={{ color: 'var(--color-primary)' }}>CSE Department</span>
+            </h2>
+            <p style={{ maxWidth: '750px', color: 'var(--color-text-secondary)', lineHeight: 1.8, fontSize: 'clamp(0.9rem, 3.5vw, 1rem)' }}>
+              BharatYatri Stay is a proud initiative by the students of <strong>MNNIT Allahabad (CSE)</strong>. 
+              We are dedicated to solving real-world pilgrim problems through technology. Our platform bridges the gap 
+              between technology and tradition, making spiritual journeys accessible to everyone. 
+              Trust, transparency, and innovation drive our mission.
+            </p>
+            <div style={{ 
+              display: 'flex', 
+              alignItems: 'center', 
+              gap: '2.5rem', 
+              marginTop: '1.5rem',
+              opacity: 0.9
+            }}>
+              <div style={{ textAlign: 'center' }}>
+                <div style={{ fontWeight: 800, fontSize: '1.5rem', color: 'var(--color-secondary)' }}>MNNIT</div>
+                <div style={{ fontSize: '0.75rem', textTransform: 'uppercase', color: 'var(--color-text-muted)', fontWeight: 600 }}>Heritage</div>
+              </div>
+              <div style={{ width: '1.5px', height: '40px', background: 'var(--color-border)' }} />
+              <div style={{ textAlign: 'center' }}>
+                <div style={{ fontWeight: 800, fontSize: '1.5rem', color: 'var(--color-primary)' }}>CSE</div>
+                <div style={{ fontSize: '0.75rem', textTransform: 'uppercase', color: 'var(--color-text-muted)', fontWeight: 600 }}>Technical Root</div>
+              </div>
+            </div>
           </div>
         </div>
       </section>

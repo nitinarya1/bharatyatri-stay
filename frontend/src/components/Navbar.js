@@ -144,36 +144,80 @@ export default function Navbar() {
           border: '1px solid rgba(255,255,255,0.4)',
           zIndex: 50,
         }}>
-          {[
-            { name: 'Home', href: '/', icon: Icons.Home },
-            { name: 'Find Stays', href: '/search', icon: Icons.Search },
-            { name: 'About Us', href: '/about', icon: Icons.About },
-            { name: 'Contact Us', href: '/contact', icon: Icons.Contact },
-          ].map((item) => (
-            <Link 
-              key={item.name}
-              href={item.href} 
-              onClick={() => setMenuOpen(false)} 
-              style={{ 
-                display: 'flex', 
-                alignItems: 'center',
-                gap: '0.75rem',
-                padding: '0.85rem 1rem', 
-                color: 'var(--color-text-primary)', 
-                textDecoration: 'none', 
-                fontWeight: 600,
-                fontSize: '0.95rem',
-                borderRadius: '0.75rem',
-                transition: 'background 0.2s ease',
-                marginBottom: '0.25rem'
-              }}
-              onMouseEnter={e => e.currentTarget.style.background = 'var(--color-primary-light)'}
-              onMouseLeave={e => e.currentTarget.style.background = 'transparent'}
-            >
-              <span style={{ color: 'var(--color-primary)' }}><item.icon /></span>
-              {item.name}
-            </Link>
-          ))}
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '0.25rem' }}>
+            {[
+              { name: 'Home', href: '/', icon: Icons.Home },
+              { name: 'Find Stays', href: '/search', icon: Icons.Search },
+              { name: 'About Us', href: '/about', icon: Icons.About },
+              { name: 'Contact Us', href: '/contact', icon: Icons.Contact },
+            ].map((item) => (
+              <Link 
+                key={item.name}
+                href={item.href} 
+                onClick={() => setMenuOpen(false)} 
+                style={{ 
+                  display: 'flex', 
+                  alignItems: 'center',
+                  gap: '0.75rem',
+                  padding: '0.85rem 1rem', 
+                  color: 'var(--color-text-primary)', 
+                  textDecoration: 'none', 
+                  fontWeight: 600,
+                  fontSize: '0.95rem',
+                  borderRadius: '0.75rem',
+                  transition: 'background 0.2s ease',
+                }}
+                onMouseEnter={e => e.currentTarget.style.background = 'var(--color-primary-light)'}
+                onMouseLeave={e => e.currentTarget.style.background = 'transparent'}
+              >
+                <span style={{ color: 'var(--color-primary)' }}><item.icon /></span>
+                {item.name}
+              </Link>
+            ))}
+
+            <div style={{ height: '1px', background: 'var(--color-border)', margin: '0.5rem 0' }} />
+
+            {user ? (
+              <Link 
+                href="/profile" 
+                onClick={() => setMenuOpen(false)}
+                style={{ 
+                  display: 'flex', 
+                  alignItems: 'center',
+                  gap: '0.75rem',
+                  padding: '0.85rem 1rem', 
+                  color: 'var(--color-primary)', 
+                  textDecoration: 'none', 
+                  fontWeight: 700,
+                  fontSize: '0.95rem',
+                  borderRadius: '0.75rem',
+                  background: 'var(--color-primary-light)',
+                }}
+              >
+                <Icons.User /> Account Profile
+              </Link>
+            ) : (
+              <Link 
+                href="/login" 
+                onClick={() => setMenuOpen(false)}
+                style={{ 
+                  display: 'flex', 
+                  alignItems: 'center',
+                  gap: '0.75rem',
+                  padding: '0.85rem 1rem', 
+                  color: 'white', 
+                  textDecoration: 'none', 
+                  fontWeight: 700,
+                  fontSize: '0.95rem',
+                  borderRadius: '0.75rem',
+                  background: 'var(--color-primary)',
+                  boxShadow: 'var(--shadow-primary)',
+                }}
+              >
+                <Icons.User /> Login / Register
+              </Link>
+            )}
+          </div>
         </div>
       )}
 

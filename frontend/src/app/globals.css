@@ -309,3 +309,14 @@
 ::-webkit-scrollbar-track { background: transparent; }
 ::-webkit-scrollbar-thumb { background: var(--color-border-dark); border-radius: 3px; }
 ::-webkit-scrollbar-thumb:hover { background: var(--color-text-muted); }
+
+/* Hotel Details Responsive Overrides */
+@media (max-width: 768px) {
+  .hotel-details-grid {
+    grid-template-columns: 1fr !important;
+  }
+  .hotel-details-grid .glass-card {
+    position: relative !important;
+    top: 0 !important;
+  }
+}

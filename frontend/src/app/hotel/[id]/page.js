@@ -2,12 +2,14 @@
 import { useEffect, useState, use } from 'react';
 import Link from 'next/link';
 import { fetchHotel } from '@/lib/api';
+import { useAuth } from '@/context/AuthContext';
 
 export default function HotelDetailPage({ params }) {
   const { id } = use(params);
   const [hotel, setHotel] = useState(null);
   const [loading, setLoading] = useState(true);
   const [activeImage, setActiveImage] = useState(0);
+  const { user } = useAuth();
 
   useEffect(() => {
     fetchHotel(id).then(res => {
@@ -217,7 +219,7 @@ export default function HotelDetailPage({ params }) {
             </div>
 
             <Link
-              href={`/checkout/${hotel._id}`}
+              href={user ? `/checkout/${hotel._id}` : `/login?redirect=/checkout/${hotel._id}`}
               className="btn-primary"
               style={{
                 width: '100%',
@@ -228,7 +230,7 @@ export default function HotelDetailPage({ params }) {
                 borderRadius: '50px',
               }}
             >
-              Book Stay →
+              {user ? 'Book Stay →' : 'Login to Book →'}
             </Link>
 
             <div style={{
@@ -246,17 +248,6 @@ export default function HotelDetailPage({ params }) {
           </div>
         </div>
 
-        <style jsx>{`
-          @media (max-width: 768px) {
-            .hotel-details-grid {
-              grid-template-columns: 1fr !important;
-            }
-            :global(.glass-card) {
-                position: relative !important;
-                top: 0 !important;
-            }
-          }
-        `}</style>
       </div>
     </div>
   );
