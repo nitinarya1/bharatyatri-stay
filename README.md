@@ -59,9 +59,6 @@ npm install
 npm run dev     # Start frontend on :3000
 ```
 
-### 3. Default Admin Login
-- **Username:** `admin`
-- **Password:** `bharatyatri@123`
 
 ## 📄 Pages
 
