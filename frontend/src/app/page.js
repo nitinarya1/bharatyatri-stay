@@ -67,35 +67,12 @@ export default function HomePage() {
   return (
     <div>
       {/* Hero Section */}
-      <section className="bg-grid" style={{
+      <section className="bg-grid section-spacing" style={{
         background: 'linear-gradient(135deg, #FFF7ED 0%, #FEF3C7 50%, #ECFDF5 100%)',
-        padding: '5rem 1rem 4rem',
         textAlign: 'center',
         position: 'relative',
         overflow: 'hidden',
       }}>
-        {/* Decorative elements */}
-        <div style={{
-          position: 'absolute',
-          top: '-60px',
-          right: '-60px',
-          width: '300px',
-          height: '300px',
-          borderRadius: '50%',
-          background: 'rgba(232,114,12,0.05)',
-          filter: 'blur(40px)',
-        }} />
-        <div style={{
-          position: 'absolute',
-          bottom: '-40px',
-          left: '-40px',
-          width: '250px',
-          height: '250px',
-          borderRadius: '50%',
-          background: 'rgba(15,118,110,0.04)',
-          filter: 'blur(40px)',
-        }} />
-
         <div className="container animate-fade-in-up" style={{ position: 'relative', zIndex: 1 }}>
           <span style={{
             display: 'inline-block',
@@ -104,7 +81,7 @@ export default function HomePage() {
             background: 'white',
             color: 'var(--color-primary)',
             fontWeight: 700,
-            fontSize: '0.8rem',
+            fontSize: 'min(0.8rem, 3.5vw)',
             marginBottom: '1.25rem',
             boxShadow: 'var(--shadow-sm)',
             textTransform: 'uppercase',
@@ -113,8 +90,8 @@ export default function HomePage() {
             🇮🇳 India&apos;s Preferred Pilgrim Stay Platform
           </span>
 
-          <h1 style={{
-            fontSize: 'clamp(2rem, 6vw, 3.5rem)',
+          <h1 className="text-balance" style={{
+            fontSize: 'clamp(1.75rem, 8vw, 3.5rem)',
             fontWeight: 800,
             lineHeight: 1.1,
             color: 'var(--color-secondary)',
@@ -132,10 +109,10 @@ export default function HomePage() {
           </h1>
 
           <p style={{
-            fontSize: '1.15rem',
+            fontSize: 'clamp(1rem, 4vw, 1.15rem)',
             color: 'var(--color-text-secondary)',
             maxWidth: '600px',
-            margin: '0 auto 2.5rem',
+            margin: '0 auto 2rem',
             lineHeight: 1.6,
             fontWeight: 500
           }}>
@@ -148,18 +125,18 @@ export default function HomePage() {
           <div style={{
             display: 'flex',
             justifyContent: 'center',
-            gap: '3rem',
-            marginTop: '3.5rem',
+            gap: 'clamp(1.5rem, 5vw, 3rem)',
+            marginTop: '3rem',
             flexWrap: 'wrap',
           }}>
             {[
-              { num: '50+', label: 'Verified Properties' },
+              { num: '50+', label: 'Verified Stays' },
               { num: '2', label: 'Spiritual Hubs' },
-              { num: '₹300', label: 'Value Stays' },
+              { num: '₹300', label: 'Value Price' },
             ].map((stat, i) => (
-              <div key={i} style={{ textAlign: 'center' }}>
-                <div style={{ fontSize: '1.75rem', fontWeight: 800, color: 'var(--color-secondary)', marginBottom: '0.25rem' }}>{stat.num}</div>
-                <div style={{ fontSize: '0.75rem', color: 'var(--color-text-muted)', fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.05em' }}>{stat.label}</div>
+              <div key={i} style={{ textAlign: 'center', flex: '1 1 100px' }}>
+                <div style={{ fontSize: 'clamp(1.25rem, 5vw, 1.75rem)', fontWeight: 800, color: 'var(--color-secondary)', marginBottom: '0.15rem' }}>{stat.num}</div>
+                <div style={{ fontSize: '0.65rem', color: 'var(--color-text-muted)', fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.05em' }}>{stat.label}</div>
               </div>
             ))}
           </div>
@@ -167,23 +144,23 @@ export default function HomePage() {
       </section>
 
       {/* Cities Section */}
-      <section style={{ padding: '5rem 1rem' }}>
+      <section className="section-spacing">
         <div className="container">
-          <div style={{ textAlign: 'center', marginBottom: '3.5rem' }}>
-            <h2 className="section-title" style={{ fontSize: '2rem', marginBottom: '0.75rem' }}>Explore Spiritual Hubs</h2>
+          <div style={{ textAlign: 'center', marginBottom: 'clamp(2rem, 8vw, 3.5rem)' }}>
+            <h2 className="section-title" style={{ fontSize: 'clamp(1.5rem, 5vw, 2rem)', marginBottom: '0.75rem' }}>Explore Spiritual Hubs</h2>
             <p className="section-subtitle">Comfortable budget stays in India&apos;s most sacred destinations</p>
           </div>
 
           <div style={{
             display: 'grid',
-            gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))',
-            gap: '2rem',
+            gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 320px), 1fr))',
+            gap: '1.5rem',
           }}>
             {cities.map(city => (
               <Link key={city.name} href={`/search?city=${city.name}`} style={{ textDecoration: 'none', color: 'inherit' }}>
                 <div className="card shadow-medium" style={{
                   position: 'relative',
-                  height: '280px',
+                  height: 'clamp(220px, 40vw, 280px)',
                   borderRadius: '1.25rem',
                   overflow: 'hidden',
                   cursor: 'pointer',
@@ -192,11 +169,7 @@ export default function HomePage() {
                     width: '100%',
                     height: '100%',
                     objectFit: 'cover',
-                    transition: 'transform 0.6s cubic-bezier(0.165, 0.84, 0.44, 1)',
-                  }}
-                    onMouseEnter={e => e.target.style.transform = 'scale(1.1)'}
-                    onMouseLeave={e => e.target.style.transform = 'scale(1)'}
-                  />
+                  }} />
                   <div style={{
                     position: 'absolute',
                     inset: 0,
@@ -204,14 +177,14 @@ export default function HomePage() {
                     display: 'flex',
                     flexDirection: 'column',
                     justifyContent: 'flex-end',
-                    padding: '2rem',
+                    padding: 'clamp(1rem, 5vw, 2rem)',
                   }}>
-                    <div style={{ color: 'var(--color-primary)', marginBottom: '0.5rem' }}>
+                    <div style={{ color: 'var(--color-primary)', marginBottom: '0.25rem' }}>
                       <city.icon />
                     </div>
-                    <h3 style={{ fontSize: '1.75rem', fontWeight: 800, color: 'white', marginBottom: '0.25rem' }}>{city.name}</h3>
-                    <p style={{ fontSize: '0.9rem', color: 'rgba(255,255,255,0.8)', fontWeight: 500 }}>
-                      {city.tagline} • {city.desc}
+                    <h3 style={{ fontSize: 'clamp(1.25rem, 5vw, 1.75rem)', fontWeight: 800, color: 'white', marginBottom: '0.25rem' }}>{city.name}</h3>
+                    <p style={{ fontSize: '0.85rem', color: 'rgba(255,255,255,0.8)', fontWeight: 500 }}>
+                      {city.tagline}
                     </p>
                   </div>
                 </div>
@@ -222,96 +195,75 @@ export default function HomePage() {
       </section>
 
       {/* Featured Stays */}
-      <section style={{ padding: '5rem 1rem', background: 'var(--color-surface-alt)' }}>
+      <section className="section-spacing" style={{ background: 'var(--color-surface-alt)' }}>
         <div className="container">
-          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '3rem', flexWrap: 'wrap', gap: '1rem' }}>
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '2.5rem', flexWrap: 'wrap', gap: '1rem' }}>
             <div>
-              <h2 className="section-title">Popular Stays</h2>
+              <h2 className="section-title" style={{ fontSize: 'clamp(1.5rem, 5vw, 2rem)' }}>Popular Stays</h2>
               <p className="section-subtitle">Our top-rated budget-friendly properties</p>
             </div>
             <Link href="/search" className="btn-outline" style={{ 
               textDecoration: 'none', 
               borderRadius: '50px',
-              padding: '0.6rem 1.5rem',
-              fontSize: '0.9rem'
+              padding: '0.5rem 1.25rem',
+              fontSize: '0.85rem'
             }}>
-              View All Properties →
+              View All →
             </Link>
           </div>
 
           {loading ? (
-            <div style={{ textAlign: 'center', padding: '5rem', color: 'var(--color-text-muted)' }}>
-              <div style={{ width: '40px', height: '40px', border: '3px solid var(--color-primary-light)', borderTopColor: 'var(--color-primary)', borderRadius: '50%', animation: 'spin 1s linear infinite', margin: '0 auto 1rem' }} />
-              <style jsx>{`@keyframes spin { to { transform: rotate(360deg); } }`}</style>
+            <div style={{ textAlign: 'center', padding: '3rem', color: 'var(--color-text-muted)' }}>
               Loading curated stays...
             </div>
           ) : (
             <div className="stagger-children" style={{
               display: 'grid',
-              gridTemplateColumns: 'repeat(auto-fill, minmax(300px, 1fr))',
-              gap: '2rem',
+              gridTemplateColumns: 'repeat(auto-fill, minmax(min(100%, 280px), 1fr))',
+              gap: '1.5rem',
             }}>
               {hotels.slice(0, 6).map(hotel => (
                 <HotelCard key={hotel._id} hotel={hotel} />
               ))}
             </div>
           )}
-
-          {!loading && hotels.length === 0 && (
-            <div style={{ textAlign: 'center', padding: '5rem', color: 'var(--color-text-muted)' }}>
-              <p style={{ fontSize: '1.25rem', marginBottom: '0.5rem', fontWeight: 600 }}>Expanding Our Network</p>
-              <p style={{ fontSize: '0.95rem' }}>New properties in sacred cities are being verified daily.</p>
-            </div>
-          )}
         </div>
       </section>
 
       {/* Why Choose Us */}
-      <section style={{ padding: '6rem 1rem' }}>
+      <section className="section-spacing">
         <div className="container">
-          <div style={{ textAlign: 'center', marginBottom: '4rem' }}>
-            <h2 className="section-title">Why BharatYatri Stay?</h2>
-            <p className="section-subtitle">A platform built for the unique needs of spiritual travelers</p>
+          <div style={{ textAlign: 'center', marginBottom: '3rem' }}>
+            <h2 className="section-title" style={{ fontSize: 'clamp(1.5rem, 5vw, 2rem)' }}>Why BharatYatri Stay?</h2>
           </div>
 
           <div style={{
             display: 'grid',
-            gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))',
-            gap: '2rem',
+            gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 260px), 1fr))',
+            gap: '1.5rem',
           }}>
             {features.map((feat, i) => (
-              <div key={i} className="glass shadow-medium" style={{
+              <div key={i} className="glass-card" style={{
                 textAlign: 'center',
-                padding: '3rem 2rem',
-                borderRadius: '1.5rem',
+                padding: '2rem 1.5rem',
                 transition: 'all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1)',
-                cursor: 'default',
-              }}
-                onMouseEnter={e => {
-                  e.currentTarget.style.transform = 'translateY(-8px)';
-                  e.currentTarget.style.boxShadow = 'var(--shadow-lg)';
-                }}
-                onMouseLeave={e => {
-                  e.currentTarget.style.transform = 'translateY(0)';
-                  e.currentTarget.style.boxShadow = 'var(--shadow-md)';
-                }}
-              >
+              }}>
                 <div style={{ 
                   color: 'var(--color-primary)', 
                   display: 'flex', 
                   justifyContent: 'center', 
-                  marginBottom: '1.5rem',
+                  marginBottom: '1rem',
                   background: 'var(--color-primary-light)',
-                  width: '72px',
-                  height: '72px',
-                  borderRadius: '1.25rem',
+                  width: '64px',
+                  height: '64px',
+                  borderRadius: '1rem',
                   alignItems: 'center',
-                  margin: '0 auto 1.5rem'
+                  margin: '0 auto 1rem'
                 }}>
                   <feat.icon />
                 </div>
-                <h3 style={{ fontSize: '1.2rem', fontWeight: 800, marginBottom: '0.75rem', color: 'var(--color-secondary)' }}>{feat.title}</h3>
-                <p style={{ fontSize: '0.9rem', color: 'var(--color-text-secondary)', lineHeight: 1.6, fontWeight: 500 }}>{feat.desc}</p>
+                <h3 style={{ fontSize: '1.1rem', fontWeight: 800, marginBottom: '0.5rem', color: 'var(--color-secondary)' }}>{feat.title}</h3>
+                <p style={{ fontSize: '0.85rem', color: 'var(--color-text-secondary)', lineHeight: 1.6 }}>{feat.desc}</p>
               </div>
             ))}
           </div>

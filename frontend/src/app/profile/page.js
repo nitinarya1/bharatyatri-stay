@@ -54,39 +54,53 @@ export default function ProfilePage() {
   }
 
   return (
-    <div style={{ background: '#F9FAFB', minHeight: '100vh', padding: '4rem 1rem' }}>
+    <div className="section-spacing" style={{ background: 'var(--color-surface-alt)', minHeight: '80vh' }}>
       <div className="container" style={{ maxWidth: '1000px' }}>
-        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end', marginBottom: '3rem', flexWrap: 'wrap', gap: '1rem' }}>
+        {/* Header Section */}
+        <div style={{
+          display: 'flex',
+          justifyContent: 'space-between',
+          alignItems: 'center',
+          flexWrap: 'wrap',
+          gap: '1.5rem',
+          marginBottom: '3rem',
+        }}>
           <div>
-            <h1 style={{ fontSize: '2.5rem', fontWeight: 800, color: 'var(--color-secondary)', marginBottom: '0.5rem' }}>Jai Hind, {user?.name}!</h1>
+            <h1 className="text-balance" style={{ fontSize: 'clamp(1.75rem, 5vw, 2.5rem)', fontWeight: 800, color: 'var(--color-secondary)', marginBottom: '0.5rem' }}>
+              Jai Hind, {user?.name}!
+            </h1>
             <p style={{ color: 'var(--color-text-secondary)', fontWeight: 500 }}>Welcome to your spiritual travel dashboard</p>
           </div>
-          <button onClick={() => { logout(); router.push('/'); }} className="btn-outline" style={{ 
-            borderColor: '#DC2626', 
-            color: '#DC2626', 
-            padding: '0.6rem 1.5rem',
-            borderRadius: '0.75rem',
-            fontSize: '0.9rem',
-            fontWeight: 700
-          }}>
+          <button 
+            onClick={() => { logout(); router.push('/'); }} 
+            className="btn-outline" 
+            style={{ 
+              borderColor: '#DC2626', 
+              color: '#DC2626', 
+              padding: '0.6rem 1.5rem',
+              borderRadius: '50px',
+              fontSize: '0.9rem',
+              fontWeight: 700
+            }}
+          >
             Log Out Account
           </button>
         </div>
 
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '2rem' }}>
-          {/* Account Overview */}
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 320px), 1fr))', gap: '2rem' }}>
+          {/* Left - Account Details */}
           <div className="glass shadow-medium" style={{ padding: '2rem', borderRadius: '1.5rem', alignSelf: 'start' }}>
             <h2 style={{ fontSize: '1.25rem', fontWeight: 800, marginBottom: '1.5rem', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
               👤 Account Details
             </h2>
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '1.25rem' }}>
+            <div className="grid-stack" style={{ gap: '1.25rem' }}>
               <div>
-                <label style={{ display: 'block', fontSize: '0.75rem', fontWeight: 700, color: 'var(--color-text-muted)', textTransform: 'uppercase', marginBottom: '0.25rem' }}>Email</label>
+                <label style={{ display: 'block', fontSize: '0.75rem', fontWeight: 700, color: 'var(--color-text-muted)', textTransform: 'uppercase', marginBottom: '0.25rem' }}>Email Address</label>
                 <div style={{ fontSize: '1rem', fontWeight: 600 }}>{user?.email}</div>
               </div>
               <div>
                 <label style={{ display: 'block', fontSize: '0.75rem', fontWeight: 700, color: 'var(--color-text-muted)', textTransform: 'uppercase', marginBottom: '0.25rem' }}>Phone</label>
-                <div style={{ fontSize: '1rem', fontWeight: 600 }}>{profileData?.user?.phone || 'Loading...'}</div>
+                <div style={{ fontSize: '1rem', fontWeight: 600 }}>{profileData?.user?.phone || 'Not provided'}</div>
               </div>
               <div>
                 <label style={{ display: 'block', fontSize: '0.75rem', fontWeight: 700, color: 'var(--color-text-muted)', textTransform: 'uppercase', marginBottom: '0.25rem' }}>Total Stays</label>
@@ -95,65 +109,93 @@ export default function ProfilePage() {
             </div>
           </div>
 
-          {/* Booking History */}
-          <div style={{ gridColumn: 'span 2' }}>
+          {/* Right - Booking History */}
+          <div style={{ flex: 1 }}>
             <h2 style={{ fontSize: '1.5rem', fontWeight: 800, color: 'var(--color-secondary)', marginBottom: '1.5rem', display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
-              📅 My Stays & History
+              📅 Stay History
             </h2>
             
-            {profileData?.bookings?.length === 0 ? (
-              <div style={{ textAlign: 'center', padding: '5rem 2rem', background: 'white', borderRadius: '1.5rem', border: '2px dashed #E5E7EB' }}>
+            {!profileData?.bookings || profileData.bookings.length === 0 ? (
+              <div className="glass-card" style={{ textAlign: 'center', padding: '4rem 2rem' }}>
                 <div style={{ fontSize: '3rem', marginBottom: '1rem' }}>🙏</div>
                 <h3 style={{ fontSize: '1.25rem', fontWeight: 700, marginBottom: '0.5rem' }}>No bookings found</h3>
-                <p style={{ color: 'var(--color-text-muted)', marginBottom: '2rem' }}>You haven&apos;t started your spiritual journey yet.</p>
+                <p style={{ color: 'var(--color-text-muted)', marginBottom: '2rem' }}>Your spiritual journey awaits.</p>
                 <button onClick={() => router.push('/search')} className="btn-primary" style={{ padding: '0.75rem 2rem', borderRadius: '50px' }}>
-                  Explore Stays Now
+                  Find Stays Now
                 </button>
               </div>
             ) : (
-              <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
-                {profileData?.bookings?.map(booking => {
+              <div className="grid-stack" style={{ gap: '1.25rem' }}>
+                {profileData.bookings.map(booking => {
                   const status = getStatusColor(booking.status);
                   return (
                     <div key={booking._id} className="glass shadow-small" style={{
                       padding: '1.5rem',
                       borderRadius: '1.25rem',
-                      display: 'flex',
-                      justifyContent: 'space-between',
-                      alignItems: 'center',
-                      flexWrap: 'wrap',
-                      gap: '1.5rem',
+                      background: 'white',
                       border: '1px solid white',
-                      transition: 'all 0.2s ease',
-                      cursor: 'pointer'
-                    }}
-                    onMouseEnter={e => e.currentTarget.style.transform = 'translateY(-2px)'}
-                    onMouseLeave={e => e.currentTarget.style.transform = 'translateY(0)'}
-                    >
-                      <div style={{ flex: 1 }}>
-                        <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', marginBottom: '0.4rem' }}>
-                          <h3 style={{ fontSize: '1.15rem', fontWeight: 800, color: 'var(--color-secondary)' }}>{booking.hotelName}</h3>
-                          <span style={{
-                            fontSize: '0.65rem',
-                            fontWeight: 800,
-                            textTransform: 'uppercase',
-                            padding: '0.25rem 0.6rem',
-                            borderRadius: '50px',
-                            background: status.bg,
-                            color: status.text,
-                            border: `1px solid ${status.border}`
-                          }}>
-                            {booking.status}
-                          </span>
+                      transition: 'all 0.2s',
+                    }}>
+                      <div style={{
+                        display: 'flex',
+                        justifyContent: 'space-between',
+                        alignItems: 'flex-start',
+                        marginBottom: '1.25rem',
+                        flexWrap: 'wrap',
+                        gap: '1rem'
+                      }}>
+                        <div style={{ display: 'flex', gap: '1rem', alignItems: 'center' }}>
+                          <div style={{
+                            width: '48px',
+                            height: '48px',
+                            borderRadius: '12px',
+                            background: 'var(--color-primary-light)',
+                            display: 'flex',
+                            alignItems: 'center',
+                            justifyContent: 'center',
+                            fontSize: '1.25rem',
+                            flexShrink: 0
+                          }}>🏨</div>
+                          <div>
+                            <h3 style={{ fontSize: '1rem', fontWeight: 800 }}>{booking.hotelName}</h3>
+                            <p style={{ fontSize: '0.8rem', color: 'var(--color-text-muted)', fontWeight: 600 }}>{booking.roomType}</p>
+                          </div>
                         </div>
-                        <div style={{ fontSize: '0.875rem', color: 'var(--color-text-secondary)', fontWeight: 500 }}>
-                          {new Date(booking.checkIn).toLocaleDateString()} — {new Date(booking.checkOut).toLocaleDateString()}
-                        </div>
+                        <span style={{
+                          padding: '0.35rem 0.85rem',
+                          borderRadius: '50px',
+                          fontSize: '0.7rem',
+                          fontWeight: 800,
+                          background: status.bg,
+                          color: status.text,
+                          textTransform: 'uppercase',
+                          letterSpacing: '0.05em',
+                          border: `1px solid ${status.border}`
+                        }}>
+                          {booking.status}
+                        </span>
                       </div>
 
-                      <div style={{ textAlign: 'right' }}>
-                        <div style={{ fontSize: '1.25rem', fontWeight: 900, color: 'var(--color-primary)' }}>₹{booking.totalPrice}</div>
-                        <div style={{ fontSize: '0.75rem', fontWeight: 700, color: 'var(--color-text-muted)' }}>{booking.roomType}</div>
+                      <div style={{
+                        display: 'grid',
+                        gridTemplateColumns: 'repeat(auto-fit, minmax(120px, 1fr))',
+                        gap: '1rem',
+                        paddingTop: '1rem',
+                        borderTop: '1px dashed var(--color-border)',
+                        fontSize: '0.85rem',
+                      }}>
+                        <div>
+                          <div style={{ fontSize: '0.65rem', color: 'var(--color-text-muted)', fontWeight: 700, textTransform: 'uppercase', marginBottom: '0.2rem' }}>Check-in</div>
+                          <div style={{ fontWeight: 700 }}>{new Date(booking.checkIn).toLocaleDateString()}</div>
+                        </div>
+                        <div>
+                          <div style={{ fontSize: '0.65rem', color: 'var(--color-text-muted)', fontWeight: 700, textTransform: 'uppercase', marginBottom: '0.2rem' }}>Check-out</div>
+                          <div style={{ fontWeight: 700 }}>{new Date(booking.checkOut).toLocaleDateString()}</div>
+                        </div>
+                        <div style={{ textAlign: 'right' }}>
+                          <div style={{ fontSize: '0.65rem', color: 'var(--color-text-muted)', fontWeight: 700, textTransform: 'uppercase', marginBottom: '0.2rem' }}>Total Paid</div>
+                          <div style={{ fontSize: '1.1rem', fontWeight: 900, color: 'var(--color-primary)' }}>₹{booking.totalPrice}</div>
+                        </div>
                       </div>
                     </div>
                   );

@@ -58,10 +58,11 @@ export default function HotelDetailPage({ params }) {
         {/* Image Gallery */}
         <div style={{ marginBottom: '2rem' }}>
           <div style={{
-            borderRadius: '1rem',
+            borderRadius: '1.25rem',
             overflow: 'hidden',
-            height: '350px',
+            height: 'clamp(200px, 50vw, 400px)',
             marginBottom: '0.75rem',
+            boxShadow: 'var(--shadow-md)',
           }}>
             <img
               src={hotel.images?.[activeImage] || 'https://images.unsplash.com/photo-1566073771259-6a8506099945?w=800'}
@@ -70,7 +71,14 @@ export default function HotelDetailPage({ params }) {
             />
           </div>
           {hotel.images?.length > 1 && (
-            <div style={{ display: 'flex', gap: '0.5rem', overflowX: 'auto', paddingBottom: '0.5rem' }}>
+            <div style={{ 
+              display: 'flex', 
+              gap: '0.5rem', 
+              overflowX: 'auto', 
+              paddingBottom: '0.5rem',
+              scrollbarWidth: 'none',
+              msOverflowStyle: 'none'
+            }}>
               {hotel.images.map((img, i) => (
                 <img
                   key={i}
@@ -78,14 +86,15 @@ export default function HotelDetailPage({ params }) {
                   alt={`${hotel.name} ${i + 1}`}
                   onClick={() => setActiveImage(i)}
                   style={{
-                    width: '80px',
-                    height: '60px',
+                    width: 'clamp(60px, 15vw, 80px)',
+                    height: 'clamp(45px, 12vw, 60px)',
                     objectFit: 'cover',
-                    borderRadius: '0.5rem',
+                    borderRadius: '0.75rem',
                     cursor: 'pointer',
                     border: activeImage === i ? '2.5px solid var(--color-primary)' : '2px solid transparent',
                     opacity: activeImage === i ? 1 : 0.6,
                     transition: 'all 0.2s',
+                    flexShrink: 0,
                   }}
                 />
               ))}
@@ -111,32 +120,33 @@ export default function HotelDetailPage({ params }) {
                   background: hotel.rating >= 4 ? '#DCFCE7' : '#FEF9C3',
                   color: hotel.rating >= 4 ? '#16A34A' : '#CA8A04',
                 }}>
-                  ★ {hotel.rating?.toFixed(1)} ({hotel.totalReviews} reviews)
+                  ★ {hotel.rating?.toFixed(1)}
                 </span>
               </div>
-              <h1 style={{ fontSize: '1.75rem', fontWeight: 800, marginBottom: '0.35rem' }}>{hotel.name}</h1>
-              <p style={{ fontSize: '0.9rem', color: 'var(--color-text-muted)' }}>📍 {hotel.address}</p>
+              <h1 style={{ fontSize: 'clamp(1.5rem, 6vw, 2rem)', fontWeight: 800, marginBottom: '0.35rem', lineHeight: 1.2 }}>{hotel.name}</h1>
+              <p style={{ fontSize: '0.85rem', color: 'var(--color-text-muted)' }}>📍 {hotel.address}</p>
             </div>
 
             {/* Description */}
-            <div style={{ marginBottom: '2rem' }}>
-              <h3 style={{ fontSize: '1rem', fontWeight: 700, marginBottom: '0.5rem' }}>About this property</h3>
+            <div className="glass-card" style={{ padding: '1.5rem', marginBottom: '2rem' }}>
+              <h3 style={{ fontSize: '1rem', fontWeight: 700, marginBottom: '0.75rem' }}>About this property</h3>
               <p style={{ fontSize: '0.9rem', color: 'var(--color-text-secondary)', lineHeight: 1.7 }}>{hotel.description}</p>
             </div>
 
             {/* Amenities */}
             <div style={{ marginBottom: '2rem' }}>
-              <h3 style={{ fontSize: '1rem', fontWeight: 700, marginBottom: '0.75rem' }}>Amenities</h3>
-              <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.5rem' }}>
+              <h3 style={{ fontSize: '1rem', fontWeight: 700, marginBottom: '1rem' }}>Amenities</h3>
+              <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.65rem' }}>
                 {hotel.amenities?.map((a, i) => (
                   <span key={i} style={{
-                    padding: '0.4rem 0.85rem',
-                    borderRadius: '0.5rem',
-                    background: 'var(--color-surface-alt)',
-                    border: '1px solid var(--color-border)',
+                    padding: '0.45rem 1rem',
+                    borderRadius: '0.75rem',
+                    background: 'white',
+                    border: '1.5px solid var(--color-border)',
                     fontSize: '0.8rem',
-                    fontWeight: 500,
+                    fontWeight: 600,
                     color: 'var(--color-text-secondary)',
+                    boxShadow: 'var(--shadow-sm)',
                   }}>
                     {a}
                   </span>
@@ -144,96 +154,64 @@ export default function HotelDetailPage({ params }) {
               </div>
             </div>
 
-            {/* Nearby Attractions */}
-            {hotel.nearbyAttractions?.length > 0 && (
-              <div style={{ marginBottom: '2rem' }}>
-                <h3 style={{ fontSize: '1rem', fontWeight: 700, marginBottom: '0.75rem' }}>Nearby Attractions</h3>
-                <div style={{ display: 'flex', flexDirection: 'column', gap: '0.4rem' }}>
-                  {hotel.nearbyAttractions.map((a, i) => (
-                    <span key={i} style={{ fontSize: '0.85rem', color: 'var(--color-text-secondary)' }}>
-                      📍 {a}
-                    </span>
-                  ))}
-                </div>
-              </div>
-            )}
-
             {/* Policies */}
             <div style={{ marginBottom: '2rem' }}>
-              <h3 style={{ fontSize: '1rem', fontWeight: 700, marginBottom: '0.75rem' }}>Policies</h3>
+              <h3 style={{ fontSize: '1rem', fontWeight: 700, marginBottom: '1rem' }}>Policies</h3>
               <div style={{
                 display: 'grid',
-                gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))',
-                gap: '0.75rem',
+                gridTemplateColumns: 'repeat(auto-fit, minmax(180px, 1fr))',
+                gap: '1rem',
               }}>
-                <div style={{ padding: '0.75rem', borderRadius: '0.5rem', background: 'var(--color-surface-alt)' }}>
-                  <div style={{ fontSize: '0.75rem', fontWeight: 600, color: 'var(--color-text-muted)', marginBottom: '0.25rem' }}>Check-in</div>
-                  <div style={{ fontSize: '0.9rem', fontWeight: 600 }}>{hotel.policies?.checkIn}</div>
+                <div style={{ padding: '1rem', borderRadius: '1rem', background: 'var(--color-surface-alt)', border: '1px solid var(--color-border)' }}>
+                  <div style={{ fontSize: '0.7rem', fontWeight: 700, color: 'var(--color-text-muted)', marginBottom: '0.35rem', textTransform: 'uppercase' }}>Check-in</div>
+                  <div style={{ fontSize: '1rem', fontWeight: 700 }}>{hotel.policies?.checkIn}</div>
                 </div>
-                <div style={{ padding: '0.75rem', borderRadius: '0.5rem', background: 'var(--color-surface-alt)' }}>
-                  <div style={{ fontSize: '0.75rem', fontWeight: 600, color: 'var(--color-text-muted)', marginBottom: '0.25rem' }}>Check-out</div>
-                  <div style={{ fontSize: '0.9rem', fontWeight: 600 }}>{hotel.policies?.checkOut}</div>
-                </div>
-                <div style={{ padding: '0.75rem', borderRadius: '0.5rem', background: 'var(--color-surface-alt)', gridColumn: '1 / -1' }}>
-                  <div style={{ fontSize: '0.75rem', fontWeight: 600, color: 'var(--color-text-muted)', marginBottom: '0.25rem' }}>Cancellation</div>
-                  <div style={{ fontSize: '0.85rem', fontWeight: 500 }}>{hotel.policies?.cancellation}</div>
+                <div style={{ padding: '1rem', borderRadius: '1rem', background: 'var(--color-surface-alt)', border: '1px solid var(--color-border)' }}>
+                  <div style={{ fontSize: '0.7rem', fontWeight: 700, color: 'var(--color-text-muted)', marginBottom: '0.35rem', textTransform: 'uppercase' }}>Check-out</div>
+                  <div style={{ fontSize: '1rem', fontWeight: 700 }}>{hotel.policies?.checkOut}</div>
                 </div>
               </div>
-              {hotel.policies?.idRequired && (
-                <p style={{ fontSize: '0.8rem', color: 'var(--color-warning)', fontWeight: 500, marginTop: '0.5rem' }}>
-                  ⚠️ Government-issued ID required at check-in
-                </p>
-              )}
             </div>
-
-            {/* Map */}
-            {hotel.mapLink && (
-              <a href={hotel.mapLink} target="_blank" rel="noopener noreferrer" className="btn-outline" style={{ textDecoration: 'none' }}>
-                📍 View on Google Maps
-              </a>
-            )}
           </div>
 
           {/* Right - Booking Card */}
-          <div style={{
+          <div className="glass-card" style={{
             padding: '1.5rem',
-            borderRadius: '1rem',
-            border: '2px solid var(--color-border)',
-            background: 'white',
             position: 'sticky',
-            top: '80px',
+            top: '90px',
+            zIndex: 10,
           }}>
-            <div style={{ marginBottom: '1rem' }}>
-              <span style={{ fontSize: '0.8rem', color: 'var(--color-text-muted)' }}>Starting from</span>
+            <div style={{ marginBottom: '1.25rem' }}>
+              <span style={{ fontSize: '0.8rem', color: 'var(--color-text-muted)', fontWeight: 600 }}>Starting from</span>
               <div style={{ display: 'flex', alignItems: 'baseline', gap: '0.25rem' }}>
                 <span style={{ fontSize: '2rem', fontWeight: 800, color: 'var(--color-primary)' }}>₹{hotel.pricePerNight}</span>
-                <span style={{ color: 'var(--color-text-muted)', fontSize: '0.9rem' }}>/night</span>
+                <span style={{ color: 'var(--color-text-muted)', fontSize: '0.9rem', fontWeight: 500 }}>/night</span>
               </div>
             </div>
 
             {/* Room Types */}
-            <div style={{ marginBottom: '1.25rem' }}>
-              <h4 style={{ fontSize: '0.85rem', fontWeight: 700, marginBottom: '0.5rem' }}>Room Options</h4>
+            <div style={{ marginBottom: '1.5rem' }}>
+              <h4 style={{ fontSize: '0.85rem', fontWeight: 700, marginBottom: '0.75rem', color: 'var(--color-secondary)', textTransform: 'uppercase', letterSpacing: '0.05em' }}>Room Options</h4>
               {hotel.roomTypes?.map((room, i) => (
                 <div key={i} style={{
                   display: 'flex',
                   justifyContent: 'space-between',
                   alignItems: 'center',
-                  padding: '0.6rem 0',
+                  padding: '0.75rem 0',
                   borderBottom: i < hotel.roomTypes.length - 1 ? '1px solid var(--color-border)' : 'none',
                   fontSize: '0.85rem',
                 }}>
                   <div>
-                    <span style={{ fontWeight: 600 }}>{room.type}</span>
-                    <span style={{
-                      fontSize: '0.7rem',
+                    <div style={{ fontWeight: 700 }}>{room.type}</div>
+                    <div style={{
+                      fontSize: '0.75rem',
                       color: room.available > 0 ? 'var(--color-success)' : 'var(--color-error)',
-                      marginLeft: '0.5rem',
+                      fontWeight: 600,
                     }}>
                       {room.available > 0 ? `${room.available} left` : 'Sold out'}
-                    </span>
+                    </div>
                   </div>
-                  <span style={{ fontWeight: 700 }}>₹{room.price}</span>
+                  <span style={{ fontWeight: 800, color: 'var(--color-text-primary)' }}>₹{room.price}</span>
                 </div>
               ))}
             </div>
@@ -247,21 +225,22 @@ export default function HotelDetailPage({ params }) {
                 textAlign: 'center',
                 padding: '0.85rem',
                 fontSize: '1rem',
+                borderRadius: '50px',
               }}
             >
-              Book Now →
+              Book Stay →
             </Link>
 
-            {/* Contact */}
             <div style={{
-              marginTop: '1rem',
-              padding: '0.75rem',
+              marginTop: '1.25rem',
+              padding: '0.85rem',
               borderRadius: '0.75rem',
               background: 'var(--color-secondary-light)',
               textAlign: 'center',
+              border: '1px dashed var(--color-secondary)',
             }}>
-              <p style={{ fontSize: '0.8rem', color: 'var(--color-secondary)', fontWeight: 500 }}>
-                📞 Call Hotel: <a href={`tel:${hotel.contactPhone}`} style={{ fontWeight: 700, color: 'var(--color-secondary)' }}>{hotel.contactPhone}</a>
+              <p style={{ fontSize: 'min(0.85rem, 3.5vw)', color: 'var(--color-secondary)', fontWeight: 600 }}>
+                📞 Support: <a href={`tel:${hotel.contactPhone}`} style={{ fontWeight: 800, color: 'var(--color-secondary)', textDecoration: 'none' }}>{hotel.contactPhone}</a>
               </p>
             </div>
           </div>
@@ -271,6 +250,10 @@ export default function HotelDetailPage({ params }) {
           @media (max-width: 768px) {
             .hotel-details-grid {
               grid-template-columns: 1fr !important;
+            }
+            :global(.glass-card) {
+                position: relative !important;
+                top: 0 !important;
             }
           }
         `}</style>

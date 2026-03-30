@@ -7,9 +7,14 @@ import { AuthProvider } from '@/context/AuthContext';
 const inter = Inter({ subsets: ['latin'] });
 
 export const metadata = {
-  title: 'BharatYatri Stay | Budget Hotels, Dharamshalas & Guest Houses',
-  description: 'Find affordable and clean hotels, dharamshalas, and guest houses in Prayagraj, Varanasi, and other holy cities. Budget-friendly stays for pilgrims and travelers.',
-  keywords: 'budget hotel Prayagraj, dharamshala Varanasi, cheap hotel Kashi, guest house Sangam, affordable stay Varanasi',
+  title: {
+    default: 'BharatYatri Stay | Affordable Stays in Holy Cities',
+    template: '%s | BharatYatri Stay'
+  },
+  description: 'Book handpicked hotels, dharamshalas & guest houses in Prayagraj, Varanasi and other holy cities of India. Honest pricing, verified stays.',
+  keywords: ['pilgrim stay', 'budget hotels india', 'prayagraj hotels', 'varanasi stays', 'dharamshala booking'],
+  authors: [{ name: 'BharatYatri Team' }],
+  viewport: 'width=device-width, initial-scale=1, maximum-scale=5',
   icons: {
     icon: '/favicon.ico',
     apple: '/logo.png',

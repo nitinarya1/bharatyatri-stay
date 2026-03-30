@@ -112,12 +112,14 @@ export default function CheckoutPage({ params }) {
   const today = new Date().toISOString().split('T')[0];
 
   return (
-    <div style={{ padding: '2rem 1rem' }}>
-      <div className="container" style={{ maxWidth: '900px' }}>
-        <h1 style={{ fontSize: '1.5rem', fontWeight: 800, marginBottom: '0.25rem' }}>Book Your Stay</h1>
-        <p style={{ fontSize: '0.9rem', color: 'var(--color-text-muted)', marginBottom: '2rem' }}>
-          Complete the form below to confirm your booking at <strong>{hotel.name}</strong>
-        </p>
+    <div className="section-spacing" style={{ background: 'var(--color-surface-alt)', minHeight: '90vh' }}>
+      <div className="container" style={{ maxWidth: '1000px' }}>
+        <div style={{ marginBottom: '2rem' }}>
+          <h1 style={{ fontSize: 'clamp(1.5rem, 6vw, 1.8rem)', fontWeight: 800, marginBottom: '0.25rem' }}>Confirm Booking</h1>
+          <p style={{ fontSize: '0.9rem', color: 'var(--color-text-muted)' }}>
+            You&apos;re almost there! Review your stay at <strong>{hotel.name}</strong>
+          </p>
+        </div>
 
         <form onSubmit={handleSubmit}>
           <div style={{
@@ -127,53 +129,50 @@ export default function CheckoutPage({ params }) {
             alignItems: 'flex-start',
           }} className="checkout-grid">
             {/* Left - Form */}
-            <div>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
               {/* Guest Details */}
-              <div style={{
-                padding: '1.5rem',
-                borderRadius: '1rem',
-                border: '1px solid var(--color-border)',
-                marginBottom: '1.5rem',
-              }}>
-                <h3 style={{ fontSize: '1rem', fontWeight: 700, marginBottom: '1rem' }}>👤 Guest Details</h3>
+              <div className="glass-card" style={{ padding: '1.5rem' }}>
+                <h3 style={{ fontSize: '1rem', fontWeight: 700, marginBottom: '1.25rem', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                  <span>👤</span> Guest Information
+                </h3>
 
-                <div style={{ display: 'grid', gap: '1rem' }}>
+                <div className="grid-stack" style={{ gap: '1rem' }}>
                   <div>
-                    <label style={{ fontSize: '0.8rem', fontWeight: 600, color: 'var(--color-text-secondary)', display: 'block', marginBottom: '0.35rem' }}>
-                      Full Name *
+                    <label style={{ fontSize: '0.75rem', fontWeight: 700, color: 'var(--color-text-muted)', display: 'block', marginBottom: '0.35rem', textTransform: 'uppercase' }}>
+                      Full Name
                     </label>
                     <input
                       type="text"
                       className="input-field"
-                      placeholder="Enter your full name"
+                      placeholder="e.g. Rahul Sharma"
                       value={form.guestName}
                       onChange={e => handleChange('guestName', e.target.value)}
                       required
                     />
                   </div>
 
-                  <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem' }}>
+                  <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '1rem' }}>
                     <div>
-                      <label style={{ fontSize: '0.8rem', fontWeight: 600, color: 'var(--color-text-secondary)', display: 'block', marginBottom: '0.35rem' }}>
-                        Phone Number *
+                      <label style={{ fontSize: '0.75rem', fontWeight: 700, color: 'var(--color-text-muted)', display: 'block', marginBottom: '0.35rem', textTransform: 'uppercase' }}>
+                        Phone Number
                       </label>
                       <input
                         type="tel"
                         className="input-field"
-                        placeholder="+91 98765 43210"
+                        placeholder="+91 98XXX XXXXX"
                         value={form.guestPhone}
                         onChange={e => handleChange('guestPhone', e.target.value)}
                         required
                       />
                     </div>
                     <div>
-                      <label style={{ fontSize: '0.8rem', fontWeight: 600, color: 'var(--color-text-secondary)', display: 'block', marginBottom: '0.35rem' }}>
-                        Email (Optional)
+                      <label style={{ fontSize: '0.75rem', fontWeight: 700, color: 'var(--color-text-muted)', display: 'block', marginBottom: '0.35rem', textTransform: 'uppercase' }}>
+                        Email Address
                       </label>
                       <input
                         type="email"
                         className="input-field"
-                        placeholder="you@email.com"
+                        placeholder="you@example.com"
                         value={form.guestEmail}
                         onChange={e => handleChange('guestEmail', e.target.value)}
                       />
@@ -183,19 +182,16 @@ export default function CheckoutPage({ params }) {
               </div>
 
               {/* Stay Details */}
-              <div style={{
-                padding: '1.5rem',
-                borderRadius: '1rem',
-                border: '1px solid var(--color-border)',
-                marginBottom: '1.5rem',
-              }}>
-                <h3 style={{ fontSize: '1rem', fontWeight: 700, marginBottom: '1rem' }}>🗓️ Stay Details</h3>
+              <div className="glass-card" style={{ padding: '1.5rem' }}>
+                <h3 style={{ fontSize: '1rem', fontWeight: 700, marginBottom: '1.25rem', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                  <span>🗓️</span> Stay Preferences
+                </h3>
 
-                <div style={{ display: 'grid', gap: '1rem' }}>
-                  <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem' }}>
+                <div className="grid-stack" style={{ gap: '1rem' }}>
+                  <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '1rem' }}>
                     <div>
-                      <label style={{ fontSize: '0.8rem', fontWeight: 600, color: 'var(--color-text-secondary)', display: 'block', marginBottom: '0.35rem' }}>
-                        Check-in Date *
+                      <label style={{ fontSize: '0.75rem', fontWeight: 700, color: 'var(--color-text-muted)', display: 'block', marginBottom: '0.35rem', textTransform: 'uppercase' }}>
+                        Check-in
                       </label>
                       <input
                         type="date"
@@ -207,8 +203,8 @@ export default function CheckoutPage({ params }) {
                       />
                     </div>
                     <div>
-                      <label style={{ fontSize: '0.8rem', fontWeight: 600, color: 'var(--color-text-secondary)', display: 'block', marginBottom: '0.35rem' }}>
-                        Check-out Date *
+                      <label style={{ fontSize: '0.75rem', fontWeight: 700, color: 'var(--color-text-muted)', display: 'block', marginBottom: '0.35rem', textTransform: 'uppercase' }}>
+                        Check-out
                       </label>
                       <input
                         type="date"
@@ -221,10 +217,10 @@ export default function CheckoutPage({ params }) {
                     </div>
                   </div>
 
-                  <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem' }}>
+                  <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '1rem' }}>
                     <div>
-                      <label style={{ fontSize: '0.8rem', fontWeight: 600, color: 'var(--color-text-secondary)', display: 'block', marginBottom: '0.35rem' }}>
-                        Guests
+                      <label style={{ fontSize: '0.75rem', fontWeight: 700, color: 'var(--color-text-muted)', display: 'block', marginBottom: '0.35rem', textTransform: 'uppercase' }}>
+                        Number of Guests
                       </label>
                       <select
                         className="input-field"
@@ -237,8 +233,8 @@ export default function CheckoutPage({ params }) {
                       </select>
                     </div>
                     <div>
-                      <label style={{ fontSize: '0.8rem', fontWeight: 600, color: 'var(--color-text-secondary)', display: 'block', marginBottom: '0.35rem' }}>
-                        Room Type *
+                      <label style={{ fontSize: '0.75rem', fontWeight: 700, color: 'var(--color-text-muted)', display: 'block', marginBottom: '0.35rem', textTransform: 'uppercase' }}>
+                        Select Room Type
                       </label>
                       <select
                         className="input-field"
@@ -247,45 +243,29 @@ export default function CheckoutPage({ params }) {
                       >
                         {hotel.roomTypes?.map((room, i) => (
                           <option key={i} value={room.type}>
-                            {room.type} - ₹{room.price}/night
+                            {room.type} (₹{room.price}/night)
                           </option>
                         ))}
                       </select>
                     </div>
                   </div>
-
-                  <div>
-                    <label style={{ fontSize: '0.8rem', fontWeight: 600, color: 'var(--color-text-secondary)', display: 'block', marginBottom: '0.35rem' }}>
-                      Special Requests (Optional)
-                    </label>
-                    <textarea
-                      className="input-field"
-                      placeholder="Any special requests? (e.g., extra blanket, ground floor room)"
-                      value={form.specialRequests}
-                      onChange={e => handleChange('specialRequests', e.target.value)}
-                      rows={3}
-                      style={{ resize: 'vertical' }}
-                    />
-                  </div>
                 </div>
               </div>
 
               {/* Payment */}
-              <div style={{
-                padding: '1.5rem',
-                borderRadius: '1rem',
-                border: '1px solid var(--color-border)',
-              }}>
-                <h3 style={{ fontSize: '1rem', fontWeight: 700, marginBottom: '1rem' }}>💳 Payment Method</h3>
+              <div className="glass-card" style={{ padding: '1.5rem' }}>
+                <h3 style={{ fontSize: '1rem', fontWeight: 700, marginBottom: '1.25rem', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                  <span>💳</span> Payment Option
+                </h3>
 
-                <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
+                <div className="grid-stack" style={{ gap: '0.75rem' }}>
                   <label style={{
                     display: 'flex',
                     alignItems: 'center',
-                    gap: '0.75rem',
-                    padding: '1rem',
-                    borderRadius: '0.75rem',
-                    border: form.paymentMode === 'pay_at_hotel' ? '2px solid var(--color-primary)' : '1.5px solid var(--color-border)',
+                    gap: '1rem',
+                    padding: '1.25rem',
+                    borderRadius: '1rem',
+                    border: form.paymentMode === 'pay_at_hotel' ? '2px solid var(--color-primary)' : '1px solid var(--color-border)',
                     background: form.paymentMode === 'pay_at_hotel' ? 'var(--color-primary-light)' : 'white',
                     cursor: 'pointer',
                     transition: 'all 0.2s',
@@ -296,21 +276,21 @@ export default function CheckoutPage({ params }) {
                       value="pay_at_hotel"
                       checked={form.paymentMode === 'pay_at_hotel'}
                       onChange={e => handleChange('paymentMode', e.target.value)}
-                      style={{ accentColor: 'var(--color-primary)' }}
+                      style={{ accentColor: 'var(--color-primary)', width: '20px', height: '20px' }}
                     />
                     <div>
-                      <div style={{ fontWeight: 600, fontSize: '0.9rem' }}>🏨 Pay at Hotel</div>
-                      <div style={{ fontSize: '0.8rem', color: 'var(--color-text-muted)' }}>Pay when you arrive. Cash/UPI accepted.</div>
+                      <div style={{ fontWeight: 700, fontSize: '0.95rem' }}>Pay at Hotel</div>
+                      <div style={{ fontSize: '0.8rem', color: 'var(--color-text-muted)', fontWeight: 500 }}>Safe & Secure. Pay during check-in.</div>
                     </div>
                   </label>
 
                   <label style={{
                     display: 'flex',
                     alignItems: 'center',
-                    gap: '0.75rem',
-                    padding: '1rem',
-                    borderRadius: '0.75rem',
-                    border: form.paymentMode === 'upi_advance' ? '2px solid var(--color-primary)' : '1.5px solid var(--color-border)',
+                    gap: '1rem',
+                    padding: '1.25rem',
+                    borderRadius: '1rem',
+                    border: form.paymentMode === 'upi_advance' ? '2px solid var(--color-primary)' : '1px solid var(--color-border)',
                     background: form.paymentMode === 'upi_advance' ? 'var(--color-primary-light)' : 'white',
                     cursor: 'pointer',
                     transition: 'all 0.2s',
@@ -321,11 +301,11 @@ export default function CheckoutPage({ params }) {
                       value="upi_advance"
                       checked={form.paymentMode === 'upi_advance'}
                       onChange={e => handleChange('paymentMode', e.target.value)}
-                      style={{ accentColor: 'var(--color-primary)' }}
+                      style={{ accentColor: 'var(--color-primary)', width: '20px', height: '20px' }}
                     />
                     <div>
-                      <div style={{ fontWeight: 600, fontSize: '0.9rem' }}>📱 Pay via UPI (Advance)</div>
-                      <div style={{ fontSize: '0.8rem', color: 'var(--color-text-muted)' }}>Pay advance to confirm your booking instantly.</div>
+                      <div style={{ fontWeight: 700, fontSize: '0.95rem' }}>UPI (Instant Confirmation)</div>
+                      <div style={{ fontSize: '0.8rem', color: 'var(--color-text-muted)', fontWeight: 500 }}>Pay via Google Pay, PhonePe or Paytm.</div>
                     </div>
                   </label>
                 </div>
@@ -333,75 +313,69 @@ export default function CheckoutPage({ params }) {
             </div>
 
             {/* Right - Summary */}
-            <div style={{
+            <div className="glass-card" style={{
               padding: '1.5rem',
-              borderRadius: '1rem',
-              border: '2px solid var(--color-border)',
-              background: 'white',
               position: 'sticky',
-              top: '80px',
+              top: '90px',
+              zIndex: 10,
+              border: '2px solid var(--color-border)',
             }}>
-              <h3 style={{ fontSize: '1rem', fontWeight: 700, marginBottom: '1rem' }}>📋 Booking Summary</h3>
+              <h3 style={{ fontSize: '1rem', fontWeight: 800, marginBottom: '1.25rem' }}>Summary</h3>
 
-              {/* Hotel Info */}
               <div style={{
                 display: 'flex',
-                gap: '0.75rem',
-                marginBottom: '1rem',
-                paddingBottom: '1rem',
-                borderBottom: '1px solid var(--color-border)',
+                gap: '1rem',
+                marginBottom: '1.5rem',
+                paddingBottom: '1.25rem',
+                borderBottom: '1px dashed var(--color-border)',
               }}>
                 <img
                   src={hotel.images?.[0] || 'https://images.unsplash.com/photo-1566073771259-6a8506099945?w=200'}
                   alt={hotel.name}
-                  style={{ width: '70px', height: '55px', objectFit: 'cover', borderRadius: '0.5rem' }}
+                  style={{ width: '80px', height: '60px', objectFit: 'cover', borderRadius: '0.75rem' }}
                 />
                 <div>
-                  <h4 style={{ fontSize: '0.9rem', fontWeight: 700 }}>{hotel.name}</h4>
-                  <p style={{ fontSize: '0.75rem', color: 'var(--color-text-muted)' }}>{hotel.city}</p>
+                  <h4 style={{ fontSize: '0.9rem', fontWeight: 800, color: 'var(--color-secondary)' }}>{hotel.name}</h4>
+                  <p style={{ fontSize: '0.75rem', color: 'var(--color-text-muted)', fontWeight: 600 }}>📍 {hotel.city}</p>
                 </div>
               </div>
 
-              {/* Price Breakdown */}
-              <div style={{ marginBottom: '1rem', fontSize: '0.85rem' }}>
-                {selectedRoom && (
-                  <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '0.5rem' }}>
-                    <span style={{ color: 'var(--color-text-secondary)' }}>{selectedRoom.type}</span>
-                    <span>₹{selectedRoom.price}/night</span>
-                  </div>
-                )}
-                {nights > 0 && (
-                  <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '0.5rem' }}>
-                    <span style={{ color: 'var(--color-text-secondary)' }}>Duration</span>
-                    <span>{nights} night{nights > 1 ? 's' : ''}</span>
-                  </div>
-                )}
+              <div style={{ marginBottom: '1.5rem', display: 'flex', flexDirection: 'column', gap: '0.75rem', fontSize: '0.85rem' }}>
+                <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+                  <span style={{ color: 'var(--color-text-muted)', fontWeight: 600 }}>Stay Duration</span>
+                  <span style={{ fontWeight: 700 }}>{nights > 0 ? `${nights} night${nights > 1 ? 's' : ''}` : '—'}</span>
+                </div>
+                <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+                  <span style={{ color: 'var(--color-text-muted)', fontWeight: 600 }}>Room Type</span>
+                  <span style={{ fontWeight: 700 }}>{selectedRoom?.type || 'Select...'}</span>
+                </div>
               </div>
 
               <div style={{
                 display: 'flex',
                 justifyContent: 'space-between',
-                padding: '0.75rem 0',
-                borderTop: '2px solid var(--color-border)',
-                marginBottom: '1.25rem',
+                padding: '1rem 0',
+                borderTop: '2.5px solid var(--color-primary-light)',
+                marginBottom: '1.5rem',
               }}>
-                <span style={{ fontWeight: 700, fontSize: '1rem' }}>Total</span>
-                <span style={{ fontWeight: 800, fontSize: '1.25rem', color: 'var(--color-primary)' }}>
-                  {totalPrice > 0 ? `₹${totalPrice}` : '—'}
+                <span style={{ fontWeight: 800, fontSize: '1.1rem' }}>Pay Now</span>
+                <span style={{ fontWeight: 900, fontSize: '1.4rem', color: 'var(--color-primary)' }}>
+                  {totalPrice > 0 ? `₹${totalPrice}` : '₹0'}
                 </span>
               </div>
 
               {error && (
                 <div style={{
-                  padding: '0.75rem',
-                  borderRadius: '0.5rem',
+                  padding: '1rem',
+                  borderRadius: '0.75rem',
                   background: '#FEF2F2',
                   color: 'var(--color-error)',
-                  fontSize: '0.8rem',
-                  fontWeight: 500,
+                  fontSize: '0.85rem',
+                  fontWeight: 600,
                   marginBottom: '1rem',
+                  border: '1px solid rgba(220,38,38,0.2)'
                 }}>
-                  ❌ {error}
+                  ⚠️ {error}
                 </div>
               )}
 
@@ -411,34 +385,27 @@ export default function CheckoutPage({ params }) {
                 disabled={submitting || totalPrice === 0}
                 style={{
                   width: '100%',
-                  padding: '0.85rem',
+                  padding: '1rem',
                   fontSize: '1rem',
+                  borderRadius: '50px',
                   opacity: (submitting || totalPrice === 0) ? 0.6 : 1,
+                  boxShadow: 'var(--shadow-primary)',
                 }}
               >
-                {submitting ? '⏳ Booking...' : 'Confirm Booking →'}
+                {submitting ? 'Confirming...' : 'Place Order →'}
               </button>
-
-              <p style={{
-                fontSize: '0.7rem',
-                color: 'var(--color-text-muted)',
-                textAlign: 'center',
-                marginTop: '0.75rem',
-                lineHeight: 1.5,
-              }}>
-                By booking, you agree to our{' '}
-                <Link href="/terms" style={{ color: 'var(--color-primary)' }}>Terms</Link>{' '}
-                and{' '}
-                <Link href="/privacy" style={{ color: 'var(--color-primary)' }}>Privacy Policy</Link>.
-              </p>
             </div>
           </div>
         </form>
 
         <style jsx>{`
-          @media (max-width: 768px) {
+          @media (max-width: 850px) {
             .checkout-grid {
               grid-template-columns: 1fr !important;
+            }
+            :global(.glass-card) {
+                position: relative !important;
+                top: 0 !important;
             }
           }
         `}</style>

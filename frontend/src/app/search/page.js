@@ -40,13 +40,51 @@ function SearchContent() {
           <SearchBar initialCity={city} compact />
         </div>
 
+        {/* Mobile Filters Area */}
+        <div className="show-mobile" style={{ marginBottom: '1.5rem' }}>
+          <div style={{ display: 'flex', gap: '0.75rem', overflowX: 'auto', paddingBottom: '0.5rem', scrollbarWidth: 'none' }}>
+            <div style={{ flexShrink: 0 }}>
+              <select
+                className="input-field"
+                value={filters.type}
+                onChange={e => setFilters(f => ({ ...f, type: e.target.value }))}
+                style={{ fontSize: '0.8rem', padding: '0.5rem 1rem', width: 'auto', borderRadius: '50px' }}
+              >
+                <option value="">All Types</option>
+                <option value="hotel">Hotels</option>
+                <option value="dharamshala">Dharamshalas</option>
+                <option value="guest_house">Guest Houses</option>
+              </select>
+            </div>
+            <div style={{ flexShrink: 0 }}>
+              <select
+                className="input-field"
+                value={filters.sort}
+                onChange={e => setFilters(f => ({ ...f, sort: e.target.value }))}
+                style={{ fontSize: '0.8rem', padding: '0.5rem 1rem', width: 'auto', borderRadius: '50px' }}
+              >
+                <option value="">Sorted by: Latest</option>
+                <option value="price_asc">Price: Low to High</option>
+                <option value="price_desc">Price: High to Low</option>
+              </select>
+            </div>
+            <button
+              onClick={() => setFilters({ type: '', minPrice: '', maxPrice: '', sort: '' })}
+              className="btn-outline"
+              style={{ fontSize: '0.8rem', padding: '0.5rem 1.25rem', borderRadius: '50px', whiteSpace: 'nowrap' }}
+            >
+              Clear
+            </button>
+          </div>
+        </div>
+
         <div style={{
           display: 'flex',
           gap: '2rem',
           alignItems: 'flex-start',
         }}>
-          {/* Filters Sidebar */}
-          <div className="filters-sidebar" style={{
+          {/* Filters Sidebar (Desktop Only) */}
+          <div className="filters-sidebar hidden-mobile" style={{
             width: '260px',
             flexShrink: 0,
             padding: '1.25rem',

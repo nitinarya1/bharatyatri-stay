@@ -118,15 +118,31 @@ export default function Navbar() {
         </button>
       </div>
 
+      {/* Mobile Menu Overlay */}
+      {menuOpen && (
+        <div 
+          onClick={() => setMenuOpen(false)}
+          style={{
+            position: 'fixed',
+            inset: 0,
+            background: 'rgba(0,0,0,0.3)',
+            backdropFilter: 'blur(4px)',
+            zIndex: 40,
+          }}
+        />
+      )}
+
       {/* Mobile Menu */}
       {menuOpen && (
-        <div className="mobile-nav animate-slide-down glass shadow-medium" style={{
+        <div className="mobile-nav animate-slide-down glass shadow-large" style={{
           position: 'absolute',
           top: '100%',
-          left: 0,
-          right: 0,
-          padding: '1rem',
-          borderBottom: '1px solid var(--color-border)',
+          left: '0.5rem',
+          right: '0.5rem',
+          padding: '1.25rem',
+          borderRadius: '1.25rem',
+          border: '1px solid rgba(255,255,255,0.4)',
+          zIndex: 50,
         }}>
           {[
             { name: 'Home', href: '/', icon: Icons.Home },
