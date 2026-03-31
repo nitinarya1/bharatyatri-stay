@@ -258,7 +258,7 @@ export default function Navbar() {
       <style jsx>{`
         @media (max-width: 768px) {
           .desktop-nav { display: none !important; }
-          .mobile-menu-btn { display: block !important; }
+          .mobile-toggle { display: block !important; }
         }
       `}</style>
     </nav>

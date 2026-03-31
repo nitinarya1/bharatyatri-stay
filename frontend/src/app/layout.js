@@ -8,6 +8,14 @@ import LoginModal from '@/components/LoginModal';
 
 const inter = Inter({ subsets: ['latin'] });
 
+export const viewport = {
+  width: 'device-width',
+  initialScale: 1,
+  maximumScale: 5,
+  themeColor: '#125231',
+  viewportFit: 'cover',
+};
+
 export const metadata = {
   title: {
     default: 'BharatYatri Stay | Affordable Stays in Holy Cities',
@@ -16,10 +24,15 @@ export const metadata = {
   description: 'Book handpicked hotels, dharamshalas & guest houses in Prayagraj, Varanasi and other holy cities of India. Honest pricing, verified stays.',
   keywords: ['pilgrim stay', 'budget hotels india', 'prayagraj hotels', 'varanasi stays', 'dharamshala booking'],
   authors: [{ name: 'BharatYatri Team' }],
-  viewport: 'width=device-width, initial-scale=1, maximum-scale=5',
+  manifest: '/manifest.json',
   icons: {
     icon: '/favicon.ico',
     apple: '/logo.png',
+  },
+  appleWebApp: {
+    capable: true,
+    statusBarStyle: 'default',
+    title: 'BharatYatri Stay',
   },
 };
 
