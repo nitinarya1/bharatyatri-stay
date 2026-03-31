@@ -97,6 +97,23 @@ export async function updateHotel(id, data, token) {
   return res.json();
 }
 
+export async function fetchReviews(hotelId) {
+  const res = await fetch(`${API_BASE}/hotels/${hotelId}/reviews`);
+  return res.json();
+}
+
+export async function createReview(hotelId, data, token) {
+  const res = await fetch(`${API_BASE}/hotels/${hotelId}/reviews`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${token}`
+    },
+    body: JSON.stringify(data)
+  });
+  return res.json();
+}
+
 export async function deleteHotel(id, token) {
   const res = await fetch(`${API_BASE}/hotels/${id}`, {
     method: 'DELETE',

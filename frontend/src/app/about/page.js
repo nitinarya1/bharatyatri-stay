@@ -1,74 +1,39 @@
-import Link from 'next/link';
-
-export const metadata = {
-  title: 'About Us | BharatYatri Stay',
-  description: 'Learn about BharatYatri Stay - your trusted partner for budget-friendly stays in holy cities of India.',
-};
+'use client';
+import { useLanguage } from '@/context/LanguageContext';
 
 export default function AboutPage() {
+  const { t } = useLanguage();
+
   return (
-    <div style={{ padding: '3rem 1rem' }}>
-      <div className="container" style={{ maxWidth: '800px' }}>
-        <h1 className="section-title" style={{ textAlign: 'center', marginBottom: '0.5rem' }}>About BharatYatri Stay</h1>
-        <p className="section-subtitle" style={{ textAlign: 'center', marginBottom: '3rem' }}>
-          Making travel affordable for every Indian
+    <div style={{ padding: '4rem 1rem', background: 'var(--color-surface-alt)' }}>
+      <div className="container" style={{ maxWidth: '800px', background: 'white', padding: '3rem', borderRadius: '1.5rem', boxShadow: 'var(--shadow-md)' }}>
+        <h1 style={{ fontSize: 'clamp(2rem, 5vw, 3rem)', fontWeight: 900, marginBottom: '1.5rem', color: 'var(--color-primary)' }}>
+          {t('about')}
+        </h1>
+        
+        <p style={{ fontSize: '1.1rem', color: 'var(--color-text-secondary)', lineHeight: 1.8, marginBottom: '1.5rem' }}>
+          Welcome to <strong>BharatYatri Stay</strong>, India's premier aggregator for budget-friendly, culturally immersive, and spiritually enriching accommodations. We specialize in connecting travelers with verified dharamshalas, premium guest houses, and affordable hotels in the nation's most revered holy cities, starting with Prayagraj and Varanasi.
         </p>
 
-        <div style={{ fontSize: '0.95rem', color: 'var(--color-text-secondary)', lineHeight: 1.8 }}>
-          <div style={{
-            padding: '2rem',
-            borderRadius: '1rem',
-            background: 'var(--color-primary-light)',
-            marginBottom: '2rem',
-            textAlign: 'center'
-          }}>
-            <span style={{ fontSize: '3rem', display: 'block', marginBottom: '0.75rem' }}>🙏</span>
-            <h2 style={{ fontSize: '1.2rem', fontWeight: 700, color: 'var(--color-text-primary)', marginBottom: '0.5rem' }}>Our Mission</h2>
-            <p>
-              To provide every pilgrim, student, and budget traveler access to clean, safe, and affordable accommodation in India&apos;s sacred and culturally rich cities.
-            </p>
-          </div>
+        <h2 style={{ fontSize: '1.5rem', fontWeight: 800, marginTop: '2.5rem', marginBottom: '1rem', color: 'var(--color-secondary)' }}>
+          Our Mission
+        </h2>
+        <p style={{ fontSize: '1.05rem', color: 'var(--color-text-secondary)', lineHeight: 1.8, marginBottom: '1.5rem' }}>
+          Our mission is simple: to make spiritual and regional travel accessible to every Indian. We bridge the gap between traditional property owners and modern digital travelers. By keeping our commissions exceptionally low, we pass the savings directly to you, ensuring honest pricing without hidden fees.
+        </p>
 
-          <h3 style={{ fontSize: '1.1rem', fontWeight: 700, color: 'var(--color-text-primary)', marginBottom: '0.75rem' }}>The Problem We Solve</h3>
-          <p style={{ marginBottom: '1.5rem' }}>
-            Every year, millions of devotees and travelers visit Prayagraj, Varanasi, and other holy cities. Most of them struggle to find trustworthy budget stays. Big hotel chains charge high commissions which inflate the room prices. Many local dharamshalas and guest houses remain unlisted online, making them invisible to travelers.
+        <h2 style={{ fontSize: '1.5rem', fontWeight: 800, marginTop: '2.5rem', marginBottom: '1rem', color: 'var(--color-secondary)' }}>
+          {t('studentInnovation')}
+        </h2>
+        <p style={{ fontSize: '1.05rem', color: 'var(--color-text-secondary)', lineHeight: 1.8, marginBottom: '1.5rem' }}>
+          {t('mnnitDesc')} As a student-driven initiative, we bring the latest in web technology to solve real-world problems. We prioritize speed, security (like our 1-tap OTP login), and ease-of-use for both highly educated tourists and local pilgrims.
+        </p>
+
+        <div style={{ marginTop: '3rem', padding: '1.5rem', background: 'var(--color-primary-light)', borderRadius: '1rem', border: '1px solid var(--color-primary)' }}>
+          <h3 style={{ fontSize: '1.2rem', fontWeight: 800, color: 'var(--color-primary)', marginBottom: '0.5rem' }}>Join Our Journey</h3>
+          <p style={{ fontSize: '0.95rem', color: 'var(--color-text-primary)' }}>
+            Whether you are a traveler looking for a peaceful stay by the Ganges, or a property owner wanting to increase your bookings, BharatYatri Stay is your trusted partner.
           </p>
-
-          <h3 style={{ fontSize: '1.1rem', fontWeight: 700, color: 'var(--color-text-primary)', marginBottom: '0.75rem' }}>Our Solution</h3>
-          <p style={{ marginBottom: '1.5rem' }}>
-            BharatYatri Stay bridges this gap. We personally verify local hotels, dharamshalas, and guest houses and list them on our platform with honest pricing. No hidden charges, no surge pricing. What you see is what you pay.
-          </p>
-
-          <div style={{
-            display: 'grid',
-            gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))',
-            gap: '1rem',
-            margin: '2rem 0',
-          }}>
-            {[
-              { icon: '✅', title: 'Verified Properties', desc: 'Every property is visited and verified by our team.' },
-              { icon: '💰', title: 'Best Prices', desc: 'Direct partnerships with hotels mean lower prices for you.' },
-              { icon: '🕉️', title: 'Temple Proximity', desc: 'Stays near major temples, ghats, and attractions.' },
-              { icon: '🤝', title: 'Local Trust', desc: 'We are locals who understand your needs.' },
-            ].map((item, i) => (
-              <div key={i} style={{
-                padding: '1.25rem',
-                borderRadius: '0.75rem',
-                border: '1px solid var(--color-border)',
-                textAlign: 'center',
-              }}>
-                <span style={{ fontSize: '1.75rem', display: 'block', marginBottom: '0.5rem' }}>{item.icon}</span>
-                <h4 style={{ fontSize: '0.9rem', fontWeight: 700, color: 'var(--color-text-primary)', marginBottom: '0.25rem' }}>{item.title}</h4>
-                <p style={{ fontSize: '0.8rem' }}>{item.desc}</p>
-              </div>
-            ))}
-          </div>
-
-          <div style={{ textAlign: 'center', marginTop: '2rem' }}>
-            <Link href="/contact" className="btn-primary" style={{ textDecoration: 'none' }}>
-              Get in Touch →
-            </Link>
-          </div>
         </div>
       </div>
     </div>

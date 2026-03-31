@@ -30,89 +30,123 @@ const Icons = {
   )
 };
 
+import { useLanguage } from '@/context/LanguageContext';
+
+// ... existing Icons ...
+
 export default function Navbar() {
   const [menuOpen, setMenuOpen] = useState(false);
-  const { user } = useAuth();
+  const [langOpen, setLangOpen] = useState(false);
+  const [userDropdownOpen, setUserDropdownOpen] = useState(false);
+  const { user, logout, setLoginModalOpen } = useAuth();
+  const { language, changeLanguage, t } = useLanguage();
+
+  const handleLogout = () => {
+    logout();
+    setUserDropdownOpen(false);
+  };
+
+  const languages = [
+    { code: 'en', name: 'English', flag: '🇬🇧' },
+    { code: 'hi', name: 'Hindi (हिंदी)', flag: '🇮🇳' },
+    { code: 'es', name: 'Spanish', flag: '🇪🇸' },
+    { code: 'ar', name: 'Arabic', flag: '🇦🇪' },
+    { code: 'ja', name: 'Japanese', flag: '🇯🇵' },
+  ];
 
   return (
     <nav className="glass" style={{
       position: 'sticky',
       top: 0,
-      zIndex: 50,
+      zIndex: 150, // Higher than modal backdrop
       borderBottom: '1px solid var(--color-border)',
+      background: 'rgba(255, 255, 255, 0.95)'
     }}>
       <div className="container" style={{
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'space-between',
-        height: '72px',
+        height: '76px',
       }}>
-        {/* Logo & Brand Name */}
+        {/* Logo */}
         <Link href="/" style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', textDecoration: 'none' }}>
-          <div style={{ position: 'relative', height: '42px', width: '42px', borderRadius: '10px', overflow: 'hidden', boxShadow: 'var(--shadow-sm)' }}>
-            <Image 
-              src="/logo.png" 
-              alt="BharatYatri Logo" 
-              fill
-              style={{ objectFit: 'cover' }}
-              priority
-            />
+          <div style={{ position: 'relative', height: '44px', width: '44px', borderRadius: '12px', overflow: 'hidden', boxShadow: 'var(--shadow-sm)' }}>
+            <Image src="/logo.png" alt="BharatYatri Logo" fill style={{ objectFit: 'cover' }} priority />
           </div>
           <div style={{ display: 'flex', flexDirection: 'column', lineHeight: 1.1 }}>
-            <span style={{ 
-              fontSize: '1.25rem', 
-              fontWeight: 800, 
-              color: 'var(--color-secondary)',
-              letterSpacing: '-0.02em',
-            }}>
-              BharatYatri
-            </span>
-            <span style={{ 
-              fontSize: '0.7rem', 
-              fontWeight: 700, 
-              color: 'var(--color-primary)',
-              textTransform: 'uppercase',
-              letterSpacing: '0.05em'
-            }}>
-              Stay Platform
-            </span>
+            <span style={{ fontSize: '1.35rem', fontWeight: 850, color: 'var(--color-secondary)', letterSpacing: '-0.02em' }}>BharatYatri</span>
+            <span style={{ fontSize: '0.75rem', fontWeight: 700, color: 'var(--color-primary)', textTransform: 'uppercase', letterSpacing: '0.05em' }}>STAY</span>
           </div>
         </Link>
-        <div style={{ display: 'flex', alignItems: 'center', gap: '2rem' }} className="desktop-nav">
-          <Link href="/" style={{ color: 'var(--color-text-secondary)', textDecoration: 'none', fontWeight: 600, fontSize: '0.9rem' }}>Home</Link>
-          <Link href="/about" style={{ color: 'var(--color-text-secondary)', textDecoration: 'none', fontWeight: 600, fontSize: '0.9rem' }}>About Us</Link>
-          
-          <Link href="/search" className="btn-outline" style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', padding: '0.5rem 1rem', borderRadius: '50px', fontSize: '0.85rem' }}>
-            <Icons.Search /> Find Stays
-          </Link>
 
+        {/* Global Navigation - Desktop */}
+        <div style={{ display: 'flex', alignItems: 'center', gap: '1.5rem' }} className="desktop-nav">
+          <Link href="/" style={{ color: 'var(--color-text-secondary)', textDecoration: 'none', fontWeight: 700, fontSize: '0.9rem' }}>{t('home')}</Link>
+          <Link href="/about" style={{ color: 'var(--color-text-secondary)', textDecoration: 'none', fontWeight: 700, fontSize: '0.9rem' }}>{t('about')}</Link>
+          <Link href="/search" style={{ color: 'var(--color-text-secondary)', textDecoration: 'none', fontWeight: 700, fontSize: '0.9rem' }}>{t('findStays')}</Link>
+
+          {/* Language Switcher */}
+          <div style={{ position: 'relative' }}>
+            <button 
+              onClick={() => { setLangOpen(!langOpen); setUserDropdownOpen(false); }}
+              style={{ display: 'flex', alignItems: 'center', gap: '0.35rem', background: 'none', border: 'none', fontWeight: 700, fontSize: '0.9rem', cursor: 'pointer', color: 'var(--color-text-secondary)' }}
+            >
+              🌐 {languages.find(l => l.code === language)?.name}
+            </button>
+            {langOpen && (
+              <div className="glass shadow-large scale-up-tr" style={{ position: 'absolute', top: '100%', right: 0, marginTop: '1rem', width: '180px', borderRadius: '1rem', padding: '0.5rem', background: 'white', border: '1px solid var(--color-border)' }}>
+                {languages.map(l => (
+                  <button key={l.code} onClick={() => { changeLanguage(l.code); setLangOpen(false); }} style={{ width: '100%', textAlign: 'left', padding: '0.75rem 1rem', borderRadius: '0.5rem', border: 'none', background: language === l.code ? 'var(--color-primary-light)' : 'none', cursor: 'pointer', fontWeight: 600, fontSize: '0.85rem' }}>
+                    {l.flag} {l.name}
+                  </button>
+                ))}
+              </div>
+            )}
+          </div>
+
+          <div style={{ height: '24px', width: '1px', background: 'var(--color-border)' }} />
+
+          {/* User Section */}
           {user ? (
-            <Link href="/profile" className="btn-primary" style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', padding: '0.6rem 1.25rem', borderRadius: '50px', fontSize: '0.85rem' }}>
-              <Icons.User /> Profile
-            </Link>
+            <div style={{ position: 'relative' }}>
+              <button 
+                onClick={() => { setUserDropdownOpen(!userDropdownOpen); setLangOpen(false); }}
+                className="btn-primary" 
+                style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', padding: '0.6rem 1.25rem', borderRadius: '50px', fontSize: '0.85rem' }}
+              >
+                <Icons.User /> {user.name}
+              </button>
+              {userDropdownOpen && (
+                <div className="glass shadow-large scale-up-tr" style={{ position: 'absolute', top: '100%', right: 0, marginTop: '1rem', width: '220px', borderRadius: '1rem', padding: '0.5rem', background: 'white', border: '1px solid var(--color-border)' }}>
+                  <Link href="/profile" onClick={() => setUserDropdownOpen(false)} style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', padding: '0.85rem 1rem', textDecoration: 'none', color: 'var(--color-text-primary)', fontWeight: 600, fontSize: '0.9rem', borderRadius: '0.75rem' }}>
+                    <Icons.User /> {t('profile')}
+                  </Link>
+                  <Link href="/profile" onClick={() => setUserDropdownOpen(false)} style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', padding: '0.85rem 1rem', textDecoration: 'none', color: 'var(--color-text-primary)', fontWeight: 600, fontSize: '0.9rem', borderRadius: '0.75rem' }}>
+                    <Icons.Home /> {t('myBookings')}
+                  </Link>
+                  <div style={{ height: '1px', background: 'var(--color-border)', margin: '0.25rem 0' }} />
+                  <button onClick={handleLogout} style={{ width: '100%', display: 'flex', alignItems: 'center', gap: '0.75rem', padding: '0.85rem 1rem', border: 'none', background: 'none', color: '#DC2626', fontWeight: 700, fontSize: '0.9rem', cursor: 'pointer' }}>
+                    Logout
+                  </button>
+                </div>
+              )}
+            </div>
           ) : (
-            <Link href="/login" className="btn-primary" style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', padding: '0.6rem 1.25rem', borderRadius: '50px', fontSize: '0.85rem' }}>
-              <Icons.User /> Login
-            </Link>
+            <button 
+              onClick={() => setLoginModalOpen(true)}
+              className="btn-primary" 
+              style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', padding: '0.6rem 1.75rem', borderRadius: '50px', fontSize: '0.9rem' }}
+            >
+              {t('login')}
+            </button>
           )}
         </div>
 
-        {/* Mobile Hamburger */}
+        {/* Mobile Toggle */}
         <button
           onClick={() => setMenuOpen(!menuOpen)}
-          className="mobile-menu-btn"
-          aria-label="Toggle menu"
-          style={{
-            display: 'none',
-            background: 'none',
-            border: 'none',
-            cursor: 'pointer',
-            padding: '0.5rem',
-            color: 'var(--color-secondary)',
-            transition: 'transform 0.2s ease'
-          }}
-          onMouseDown={e => e.currentTarget.style.transform = 'scale(0.9)'}
-          onMouseUp={e => e.currentTarget.style.transform = 'scale(1)'}
+          className="mobile-toggle"
+          style={{ display: 'none', background: 'none', border: 'none', padding: '0.5rem', color: 'var(--color-secondary)', cursor: 'pointer' }}
         >
           {menuOpen ? <Icons.Close /> : <Icons.Menu />}
         </button>

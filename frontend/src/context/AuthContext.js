@@ -6,12 +6,14 @@ const AuthContext = createContext();
 export function AuthProvider({ children }) {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [isLoginModalOpen, setLoginModalOpen] = useState(false);
 
   useEffect(() => {
-    const token = localStorage.getItem('user_token');
-    const userData = localStorage.getItem('user_data');
-    if (token && userData) {
-      setUser(JSON.parse(userData));
+    const token = localStorage.getItem('token');
+    if (token) {
+      checkAuth(token);
+    } else {
+      setLoading(false);
     }
     setLoading(false);
   }, []);
@@ -20,6 +22,7 @@ export function AuthProvider({ children }) {
     localStorage.setItem('user_token', token);
     localStorage.setItem('user_data', JSON.stringify(userData));
     setUser(userData);
+    setLoginModalOpen(false);
   };
 
   const logout = () => {
@@ -29,7 +32,7 @@ export function AuthProvider({ children }) {
   };
 
   return (
-    <AuthContext.Provider value={{ user, login, logout, loading }}>
+    <AuthContext.Provider value={{ user, login, logout, loading, isLoginModalOpen, setLoginModalOpen }}>
       {children}
     </AuthContext.Provider>
   );

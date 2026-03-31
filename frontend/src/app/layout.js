@@ -3,6 +3,8 @@ import './globals.css';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import { AuthProvider } from '@/context/AuthContext';
+import { LanguageProvider } from '@/context/LanguageContext';
+import LoginModal from '@/components/LoginModal';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -26,11 +28,14 @@ export default function RootLayout({ children }) {
     <html lang="en">
       <body className={inter.className} style={{ minHeight: '100vh', display: 'flex', flexDirection: 'column' }}>
         <AuthProvider>
-          <Navbar />
-          <main style={{ flex: 1 }}>
-            {children}
-          </main>
-          <Footer />
+          <LanguageProvider>
+            <Navbar />
+            <LoginModal />
+            <main style={{ flex: 1 }}>
+              {children}
+            </main>
+            <Footer />
+          </LanguageProvider>
         </AuthProvider>
       </body>
     </html>

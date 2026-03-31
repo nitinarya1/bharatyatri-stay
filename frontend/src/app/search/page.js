@@ -15,6 +15,7 @@ function SearchContent() {
     minPrice: '',
     maxPrice: '',
     sort: '',
+    amenities: [],
   });
 
   useEffect(() => {
@@ -25,6 +26,7 @@ function SearchContent() {
     if (filters.minPrice) params.minPrice = filters.minPrice;
     if (filters.maxPrice) params.maxPrice = filters.maxPrice;
     if (filters.sort) params.sort = filters.sort;
+    if (filters.amenities.length > 0) params.amenities = filters.amenities.join(',');
 
     fetchHotels(params).then(res => {
       if (res.success) setHotels(res.data);
@@ -69,7 +71,7 @@ function SearchContent() {
               </select>
             </div>
             <button
-              onClick={() => setFilters({ type: '', minPrice: '', maxPrice: '', sort: '' })}
+              onClick={() => setFilters({ type: '', minPrice: '', maxPrice: '', sort: '', amenities: [] })}
               className="btn-outline"
               style={{ fontSize: '0.8rem', padding: '0.5rem 1.25rem', borderRadius: '50px', whiteSpace: 'nowrap' }}
             >
@@ -158,8 +160,33 @@ function SearchContent() {
               </select>
             </div>
 
+            {/* Amenities */}
+            <div style={{ marginBottom: '1.25rem' }}>
+              <label style={{ fontSize: '0.8rem', fontWeight: 600, color: 'var(--color-text-secondary)', display: 'block', marginBottom: '0.5rem' }}>
+                Amenities
+              </label>
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
+                {['AC', 'Free WiFi', 'Breakfast Included', 'Parking'].map((amenity) => (
+                  <label key={amenity} style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', fontSize: '0.85rem', color: 'var(--color-text-secondary)', cursor: 'pointer' }}>
+                    <input
+                      type="checkbox"
+                      checked={filters.amenities.includes(amenity)}
+                      onChange={(e) => {
+                        const newAmens = e.target.checked
+                          ? [...filters.amenities, amenity]
+                          : filters.amenities.filter(a => a !== amenity);
+                        setFilters(f => ({ ...f, amenities: newAmens }));
+                      }}
+                      style={{ accentColor: 'var(--color-primary)' }}
+                    />
+                    {amenity}
+                  </label>
+                ))}
+              </div>
+            </div>
+
             <button
-              onClick={() => setFilters({ type: '', minPrice: '', maxPrice: '', sort: '' })}
+              onClick={() => setFilters({ type: '', minPrice: '', maxPrice: '', sort: '', amenities: [] })}
               style={{
                 width: '100%',
                 padding: '0.6rem',

@@ -22,10 +22,10 @@ export default function HotelCard({ hotel }) {
   };
 
   const propertyTypeColors = {
-    hotel: { bg: '#EFF6FF', color: '#2563EB' },
-    dharamshala: { bg: '#FFF7ED', color: '#EA580C' },
-    guest_house: { bg: '#F0FDF4', color: '#16A34A' },
-    lodge: { bg: '#FAF5FF', color: '#9333EA' },
+    hotel: { bg: '#E7F6EF', color: '#125231' },
+    dharamshala: { bg: '#FFF7ED', color: '#C2410C' },
+    guest_house: { bg: '#F0F9FF', color: '#0369A1' },
+    lodge: { bg: '#F8FAFC', color: '#475569' },
   };
 
   const typeStyle = propertyTypeColors[hotel.propertyType] || propertyTypeColors.hotel;
@@ -44,6 +44,7 @@ export default function HotelCard({ hotel }) {
           <img
             src={hotel.images?.[0] || 'https://images.unsplash.com/photo-1566073771259-6a8506099945?w=800'}
             alt={hotel.name}
+            onError={(e) => { e.target.src = 'https://images.unsplash.com/photo-1566073771259-6a8506099945?w=800'; }}
             style={{
               width: '100%',
               height: '100%',

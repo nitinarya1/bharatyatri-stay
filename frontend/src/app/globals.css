@@ -1,30 +1,23 @@
 @import "tailwindcss";
 
 @theme {
-  --color-primary: #F28E2B;
-  --color-primary-dark: #D4741C;
-  --color-primary-light: #FFF4E5;
-  --color-secondary: #003366;
-  --color-secondary-dark: #002244;
-  --color-secondary-light: #E6EEF5;
-  --color-accent: #F28E2B;
-  --color-surface: #FFFFFF;
-  --color-surface-alt: #FDFAF3;
-  --color-text-primary: #001F3F;
-  --color-text-secondary: #4A5568;
-  --color-text-muted: #A8A29E;
-  --color-border: #E7E5E4;
-  --color-border-dark: #D6D3D1;
-  --color-success: #16A34A;
-  --color-error: #DC2626;
-  --color-warning: #F59E0B;
+  --color-primary: #125231;
+  --color-primary-dark: #0d3d25;
+  --color-primary-light: #e7f6ef;
+  --color-secondary: #000000;
+  --color-accent: #e8720c;
+  --color-bg: #ffffff;
+  --color-text-primary: #1e293b;
+  --color-text-secondary: #475569;
+  --color-text-muted: #94a3b8;
+  --color-border: #e2e8f0;
+  --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+  --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1);
+  --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1);
+  --glass-bg: rgba(255, 255, 255, 0.85);
+  --glass-border: rgba(255, 255, 255, 0.5);
 
   --font-sans: 'Inter', system-ui, -apple-system, sans-serif;
-
-  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
-  --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.08);
-  --shadow-lg: 0 12px 40px rgba(0, 0, 0, 0.12);
-  --shadow-primary: 0 4px 14px rgba(242, 142, 43, 0.25);
 }
 
 @layer base {
@@ -40,15 +33,11 @@
 
   body {
     font-family: var(--font-sans);
-    background-color: var(--color-surface);
+    background-color: var(--color-bg);
     color: var(--color-text-primary);
     line-height: 1.6;
     -webkit-font-smoothing: antialiased;
-  }
-
-  ::selection {
-    background-color: var(--color-primary);
-    color: white;
+    accent-color: var(--color-primary);
   }
 }
 
@@ -58,23 +47,17 @@
     align-items: center;
     justify-content: center;
     gap: 0.5rem;
-    padding: 0.75rem 1.5rem;
+    padding: 0.75rem 1.75rem;
     background-color: var(--color-primary);
     color: white;
-    font-weight: 600;
+    font-weight: 800;
     border-radius: 0.75rem;
     border: none;
     cursor: pointer;
-    transition: all 0.2s ease;
-    font-size: 0.95rem;
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
   }
   .btn-primary:hover {
     background-color: var(--color-primary-dark);
-    transform: translateY(-1px);
-    box-shadow: 0 4px 12px rgba(232, 114, 12, 0.3);
-  }
-  .btn-primary:active {
-    transform: translateY(0);
   }
 
   .btn-secondary {

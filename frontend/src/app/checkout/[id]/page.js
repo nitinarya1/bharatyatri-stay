@@ -13,6 +13,8 @@ export default function CheckoutPage({ params }) {
   const [loading, setLoading] = useState(true);
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState('');
+  const [showRazorpayMock, setShowRazorpayMock] = useState(false);
+  const [mockPaymentStage, setMockPaymentStage] = useState('initializing'); // initializing, processing, success
 
   // Enforce login
   useEffect(() => {
@@ -63,6 +65,31 @@ export default function CheckoutPage({ params }) {
     : 0;
   const totalPrice = selectedRoom ? selectedRoom.price * nights : 0;
 
+  const handleMockPaymentSuccess = async () => {
+    setMockPaymentStage('success');
+    setTimeout(async () => {
+      await processBooking();
+    }, 1500);
+  };
+
+  const processBooking = async () => {
+    try {
+      const res = await createBooking({ ...form, hotelId: id, userId: user?.id || null });
+      if (res.success) {
+        const bookingData = encodeURIComponent(JSON.stringify(res.data));
+        router.push(`/booking-success?data=${bookingData}`);
+      } else {
+        setError(res.error || 'Booking failed. Please try again.');
+        setSubmitting(false);
+        setShowRazorpayMock(false);
+      }
+    } catch (err) {
+      setError('Something went wrong. Please try again.');
+      setSubmitting(false);
+      setShowRazorpayMock(false);
+    }
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError('');
@@ -78,18 +105,14 @@ export default function CheckoutPage({ params }) {
     }
 
     setSubmitting(true);
-    try {
-      const res = await createBooking({ ...form, hotelId: id, userId: user?.id || null });
-      if (res.success) {
-        const bookingData = encodeURIComponent(JSON.stringify(res.data));
-        router.push(`/booking-success?data=${bookingData}`);
-      } else {
-        setError(res.error || 'Booking failed. Please try again.');
-      }
-    } catch (err) {
-      setError('Something went wrong. Please try again.');
+    
+    if (form.paymentMode === 'upi_advance') {
+      setShowRazorpayMock(true);
+      setMockPaymentStage('initializing');
+      setTimeout(() => setMockPaymentStage('processing'), 1500);
+    } else {
+      await processBooking();
     }
-    setSubmitting(false);
   };
 
   const handleChange = (field, value) => {
@@ -319,7 +342,7 @@ export default function CheckoutPage({ params }) {
               </div>
             </div>
 
-            {/* Right - Summary */}
+          {/* Right - Summary */}
             <div className="glass-card" style={{
               padding: '1.5rem',
               position: 'sticky',
@@ -399,11 +422,94 @@ export default function CheckoutPage({ params }) {
                   boxShadow: 'var(--shadow-primary)',
                 }}
               >
-                {submitting ? 'Confirming...' : 'Place Order →'}
+                {submitting && !showRazorpayMock ? 'Confirming...' : (form.paymentMode === 'upi_advance' ? 'Pay Now →' : 'Place Order →')}
               </button>
             </div>
           </div>
         </form>
+
+        {showRazorpayMock && (
+          <div style={{
+            position: 'fixed',
+            inset: 0,
+            background: 'rgba(0, 0, 0, 0.7)',
+            backdropFilter: 'blur(10px)',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            zIndex: 9999,
+          }}>
+            <div className="animate-slide-up" style={{
+              background: 'white',
+              width: '90%',
+              maxWidth: '420px',
+              borderRadius: '1.5rem',
+              overflow: 'hidden',
+              boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.5)'
+            }}>
+              {/* Header */}
+              <div style={{ background: '#0F172A', padding: '1.5rem', color: 'white', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
+                  <div style={{ background: 'white', padding: '0.25rem', borderRadius: '0.35rem' }}>
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#0F172A" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M12 2v20"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+                  </div>
+                  <div style={{ fontWeight: 800, fontSize: '1.1rem', letterSpacing: '0.02em' }}>BharatRazor</div>
+                </div>
+                {mockPaymentStage !== 'success' && (
+                  <button onClick={() => { setShowRazorpayMock(false); setSubmitting(false); }} style={{ background: 'none', border: 'none', color: 'white', opacity: 0.7, cursor: 'pointer', fontSize: '1.25rem' }}>✕</button>
+                )}
+              </div>
+
+              {/* Body */}
+              <div style={{ padding: '2rem' }}>
+                <div style={{ textAlign: 'center', marginBottom: '2rem' }}>
+                  <div style={{ fontSize: '0.9rem', color: 'var(--color-text-muted)', fontWeight: 600, marginBottom: '0.5rem' }}>PAYING BHARATYATRI STAY</div>
+                  <div style={{ fontSize: '2.5rem', fontWeight: 900, color: 'var(--color-secondary)' }}>₹{totalPrice}</div>
+                </div>
+
+                {mockPaymentStage === 'initializing' && (
+                  <div style={{ textAlign: 'center', padding: '2rem 0', color: 'var(--color-text-muted)' }}>
+                    <div style={{ fontSize: '2rem', animation: 'spin 1s linear infinite', marginBottom: '1rem' }}>↻</div>
+                    <div style={{ fontWeight: 600 }}>Initializing secure connection...</div>
+                  </div>
+                )}
+
+                {mockPaymentStage === 'processing' && (
+                  <div>
+                    <div style={{ padding: '1.25rem', border: '1px solid var(--color-border)', borderRadius: '1rem', marginBottom: '1.5rem', display: 'flex', alignItems: 'center', gap: '1rem' }}>
+                       <div style={{ width: '40px', height: '40px', background: '#F1F5F9', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '1.25rem' }}>💳</div>
+                       <div>
+                         <div style={{ fontWeight: 700, fontSize: '0.95rem' }}>Test UPI ID</div>
+                         <div style={{ fontSize: '0.8rem', color: 'var(--color-text-muted)', fontWeight: 600 }}>testing@ybl</div>
+                       </div>
+                    </div>
+                    <button
+                      onClick={handleMockPaymentSuccess}
+                      className="btn-primary"
+                      style={{ width: '100%', padding: '1rem', borderRadius: '50px', fontSize: '1rem', background: '#0F172A', color: 'white' }}
+                    >
+                      Authenticate Payment
+                    </button>
+                    <div style={{ textAlign: 'center', marginTop: '1rem', fontSize: '0.75rem', color: 'var(--color-text-muted)', fontWeight: 600 }}>
+                      This is a test environment. No real money will be deducted.
+                    </div>
+                  </div>
+                )}
+
+                {mockPaymentStage === 'success' && (
+                  <div style={{ textAlign: 'center', padding: '2rem 0' }}>
+                    <div style={{ width: '60px', height: '60px', background: '#DCFCE7', color: '#16A34A', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '2rem', margin: '0 auto 1rem auto' }}>✓</div>
+                    <div style={{ fontSize: '1.25rem', fontWeight: 800, color: '#16A34A', marginBottom: '0.5rem' }}>Payment Successful!</div>
+                    <div style={{ color: 'var(--color-text-muted)', fontWeight: 600, fontSize: '0.9rem' }}>Redirecting you to confirmation page...</div>
+                  </div>
+                )}
+              </div>
+              <div style={{ background: '#F8FAFC', padding: '1rem', textAlign: 'center', fontSize: '0.75rem', color: 'var(--color-text-muted)', fontWeight: 600, borderTop: '1px solid var(--color-border)' }}>
+                 🔒 Secured by <strong style={{ color: '#0F172A' }}>BharatRazor</strong> 128-bit encryption
+              </div>
+            </div>
+          </div>
+        )}
 
         <style jsx>{`
           @media (max-width: 850px) {
@@ -414,6 +520,9 @@ export default function CheckoutPage({ params }) {
                 position: relative !important;
                 top: 0 !important;
             }
+          }
+          @keyframes spin {
+            to { transform: rotate(360deg); }
           }
         `}</style>
       </div>

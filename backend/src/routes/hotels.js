@@ -2,7 +2,13 @@ const express = require('express');
 const Hotel = require('../models/Hotel');
 const authMiddleware = require('../middleware/auth');
 
+// Include other resource routers
+const reviewRouter = require('./reviews');
+
 const router = express.Router();
+
+// Re-route into other resource routers
+router.use('/:hotelId/reviews', reviewRouter);
 
 // GET /api/hotels - List all active hotels (public)
 router.get('/', async (req, res) => {
